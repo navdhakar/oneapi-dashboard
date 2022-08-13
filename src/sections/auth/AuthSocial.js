@@ -130,7 +130,7 @@ export default function AuthSocial() {
 
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
-    alert(`Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`);
+    alert(`Failed to login. sit tight we will fix this`);
   };
   const { signIn } = useGoogleLogin({
     onSuccess,

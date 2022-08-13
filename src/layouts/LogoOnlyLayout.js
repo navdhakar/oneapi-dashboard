@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router-dom';
+import { Card, Link, Container, Typography } from '@mui/material';
+
 // material
 import { styled } from '@mui/material/styles';
 // components
 import Logo from '../components/Logo';
+import oneapi from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +27,13 @@ export default function LogoOnlyLayout() {
   return (
     <>
       <HeaderStyle>
-        <Logo />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+          <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+
+          <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+            One <span style={{ color: '#1877F2' }}>API</span>
+          </Typography>
+        </div>
       </HeaderStyle>
       <Outlet />
     </>

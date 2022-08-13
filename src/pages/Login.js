@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
+import { Card, Link, Container, Typography, Avatar } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -10,6 +10,7 @@ import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
 import AuthSocial from '../sections/auth/AuthSocial';
+import oneapi from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +66,13 @@ export default function Login() {
     <Page title="Login">
       <RootStyle>
         <HeaderStyle>
-          <Logo />
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+
+            <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              One <span style={{ color: '#1877F2' }}>API</span>
+            </Typography>
+          </div>
 
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>

@@ -11,6 +11,8 @@ import Logo from '../components/Logo';
 import { RegisterForm } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
+import oneapi from '../assets/oneapi.png';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -65,7 +67,13 @@ export default function Register() {
     <Page title="Register">
       <RootStyle>
         <HeaderStyle>
-          <Logo />
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+
+            <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              One <span style={{ color: '#1877F2' }}>API</span>
+            </Typography>
+          </div>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Already have an account? {''}
