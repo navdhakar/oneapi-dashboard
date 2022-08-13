@@ -31,7 +31,7 @@ export default function CodeSnippet({ title, subheader, chartData, ...other }) {
     }
     const response = await fetch('http://oneapi.com/unify/dyno/createcollection', {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       body: JSON.stringify(payload),
       cache: 'no-cache',
       credentials: 'same-origin', 
@@ -52,7 +52,7 @@ export default function CodeSnippet({ title, subheader, chartData, ...other }) {
 const getData = async (dbURI/CollectionName) => {
     const response = await fetch(dbURI, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
+      mode: 'no-cors',
       credentials: 'same-origin',
       headers: {
         -'X-Parse-Application-Id': 'Database Name' 

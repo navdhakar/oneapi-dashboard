@@ -68,7 +68,7 @@ export default function Register() {
       <RootStyle>
         <HeaderStyle>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+            <img src={oneapi} alt="photoURL" style={{ width: 50 }} />
 
             <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
               One <span style={{ color: '#1877F2' }}>API</span>
