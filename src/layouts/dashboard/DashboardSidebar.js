@@ -16,7 +16,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
-
+import oneapi from '../../assets/oneapi.png';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -63,10 +63,13 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Typography variant="subtitle1" sx={{ px: 5, mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-        One <span style={{ color: '#1877F2' }}>API</span>
-      </Typography>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <Avatar src={oneapi} alt="photoURL" />
 
+        <Typography variant="subtitle1" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+          One <span style={{ color: '#1877F2' }}>API</span>
+        </Typography>
+      </div>
       <Box sx={{ mb: 5, mx: 1 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
@@ -89,6 +92,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
+          <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+
           <Typography variant="h3" sx={{ px: 5, mt: 10 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
             One <span style={{ color: '#1877F2' }}>API</span>
           </Typography>

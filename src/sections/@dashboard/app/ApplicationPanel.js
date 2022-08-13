@@ -215,22 +215,20 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
       <TableBody>
         <TableRow>
           <TableCell align="left">
-            <Typography variant="h6">Status</Typography>
+            <Typography variant="subtitle1">Status</Typography>
           </TableCell>
           <TableCell align="center">
-            <Typography variant="h6" noWrap>
-              Name
-            </Typography>
+            <Typography variant="subtitle1">Name</Typography>
           </TableCell>
-          <TableCell align="center">
-            <Typography variant="h6">DB URI</Typography>
+          <TableCell>
+            <Typography variant="subtitle1">Database URI</Typography>
           </TableCell>
-          <TableCell align="center">
-            <Typography variant="h6">Collection Name</Typography>
+          <TableCell>
+            <Typography variant="subtitle1">Collection Name</Typography>
           </TableCell>
 
           <TableCell align="left">
-            <Typography variant="h6">Add Collections</Typography>
+            <Typography variant="subtitle1">Add Collections</Typography>
           </TableCell>
         </TableRow>
       </TableBody>
@@ -249,7 +247,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
                 </Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="subtitle2" noWrap>
+                <Typography variant="subtitle2" sx={{ wordWrap: 'break-word', width: '15rem' }}>
                   {db.dburi}
                 </Typography>
               </TableCell>
