@@ -50,7 +50,7 @@ export default function DashboardApp() {
     if (cookies.jwtToken) {
       fetch(`${UNIFY_URI}/signup/register/current`, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors',
+        mode: 'cors',
         // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit

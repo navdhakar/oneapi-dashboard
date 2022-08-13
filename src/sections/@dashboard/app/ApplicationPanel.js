@@ -51,7 +51,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const makePostRequest = async (UrlPath, data) => {
     const response = await fetch(`${UNIFY_URI}${UrlPath}`, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(data),
       // no-cors, *cors, same-origin
       cache: 'no-cache',

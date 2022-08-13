@@ -38,7 +38,7 @@ export default function AuthSocial() {
   const newUserCreate = (UserData, Response) => {
     fetch(`${UNIFY_URI}/signup/register/new_social_auth`, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(UserData),
       // no-cors, *cors, same-origin
       cache: 'no-cache',
@@ -86,7 +86,7 @@ export default function AuthSocial() {
     };
     fetch(`${UNIFY_URI}/signup/register/login`, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify({ googleId: res.profileObj.googleId }),
       // no-cors, *cors, same-origin
       cache: 'no-cache',
