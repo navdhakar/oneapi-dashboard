@@ -145,7 +145,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const createCollection = (dbName, collectionName) => {
     const data = {
       collectionname: collectionName,
-      database_uri: currentURI,
+      databaseName: currentDB,
     };
     console.log(data);
     makePostRequest(`/unify/dyno/createcollection`, data)
@@ -248,7 +248,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle2" sx={{ wordWrap: 'break-word', width: '15rem' }}>
-                  {db.dburi}
+                  {UNIFY_URI}/unify/dyno/(getstoredata/createcollection)/{db.DatabaseName}
                 </Typography>
               </TableCell>
 
@@ -265,7 +265,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
                 <Button
                   variant="text"
                   onClick={(e) => {
-                    handleAddDocumentsOpen(e, db.dburi, db.DatabaseName);
+                    handleAddDocumentsOpen(e, db.DatabaseName, db.DatabaseName);
                   }}
                 >
                   + Add Collection

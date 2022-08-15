@@ -23,13 +23,11 @@ export default function CodeSnippet({ title, subheader, chartData, ...other }) {
 
   const DatabaseAPI = `const postData = async (dbURI, data) => {
     const payload = {
-      CollectionName:any_collection_name,//collection name of post data.
-      DatabaseURI:dbURI
       doc:{   // this is where you add your data object which is to be added in collection
         data
       }
     }
-    const response = await fetch('http://oneapi.com/unify/dyno/createcollection', {
+    const response = await fetch(dbURI, {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(payload),
