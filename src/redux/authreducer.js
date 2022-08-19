@@ -1,9 +1,17 @@
-import { SET_USER_NAME, SET_USER_EMAIL, SET_USER_PHOTO, SET_USER_JWT_TOKEN, SET_USER_DATABASES } from './action';
+import {
+  SET_USER_NAME,
+  SET_USER_EMAIL,
+  SET_USER_PHOTO,
+  SET_USER_JWT_TOKEN,
+  SET_USER_DATABASES,
+  SET_USER_AUTH_INFO,
+} from './action';
 
 const initialState = {
   name: null,
   email: null,
   userdatabases: null,
+  userauthinfo: null,
 };
 
 const authReducer = (state = initialState, action = {}) => {
@@ -18,6 +26,8 @@ const authReducer = (state = initialState, action = {}) => {
       return { ...state, jwttoken: action.payload };
     case SET_USER_DATABASES:
       return { ...state, userdatabases: action.payload };
+    case SET_USER_AUTH_INFO:
+      return { ...state, userauthinfo: action.payload };
     default:
       return state;
   }

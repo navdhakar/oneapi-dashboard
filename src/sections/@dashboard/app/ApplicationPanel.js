@@ -6,6 +6,7 @@ import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import {
+  Grid,
   Card,
   CardHeader,
   Box,
@@ -17,6 +18,7 @@ import {
   TableBody,
   TableCell,
   Tab,
+  CircularProgress,
 } from '@mui/material';
 // components
 import { BaseOptionChart } from '../../../components/chart';
@@ -43,9 +45,10 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const [newcollection, setnewcollection] = useState('');
   const [currentURI, setcurrentURI] = useState();
   const [currentDB, setcurrentDB] = useState();
+  const [loading, setloading] = useState(false);
 
   const obj = useSelector((state) => state.authReducer);
-  console.log(obj.userdatabases);
+  console.log(obj);
   const [dbURI, setdbURI] = useState('');
   const [newAddedDatabase, setnewAddedDatabase] = useState('');
   const makePostRequest = async (UrlPath, data) => {
@@ -85,6 +88,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
     setcurrentDB(db);
   };
   const CreateDatabase = (newdatabase) => {
+    setloading(true);
     const data = {
       name: newdatabase,
       key: 'navdeep',
@@ -113,6 +117,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
           console.log(res);
         });
         setOpen(null);
+        setloading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -176,12 +181,25 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
     setdatabase(obj.userdatabases);
     console.log(database);
   }, [dbcollections]);
+  const Loading = () => {
+    if (loading === true) {
+      return <CircularProgress />;
+    }
+  };
   return (
     <Card {...other}>
       <CardHeader title={title} />
-      <Button variant="contained" onClick={handleOpen} style={{ margin: 10 }}>
-        {subheader}
-      </Button>
+
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Button variant="contained" onClick={handleOpen} style={{ margin: 10 }}>
+            {subheader}
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <Loading />
+        </Grid>
+      </Grid>
       <MenuPopover
         open={Boolean(open)}
         anchorEl={open}

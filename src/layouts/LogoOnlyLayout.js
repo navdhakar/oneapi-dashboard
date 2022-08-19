@@ -27,13 +27,13 @@ export default function LogoOnlyLayout() {
   return (
     <>
       <HeaderStyle>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        {/* <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
           <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
 
           <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
             One <span style={{ color: '#1877F2' }}>API</span>
           </Typography>
-        </div>
+        </div> */}
       </HeaderStyle>
       <Outlet />
     </>

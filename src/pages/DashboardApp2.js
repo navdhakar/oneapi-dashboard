@@ -13,7 +13,7 @@ import { Grid, Container, Typography } from '@mui/material';
 import Page from '../components/Page';
 import Register from './Register';
 import { UNIFY_URI } from '../config';
-import { setName, setEmail, setPhoto, setJwtToken, setuserDatabases } from '../redux/action';
+import { setName, setEmail, setPhoto, setJwtToken, setuserDatabases, setuserAuthInfo } from '../redux/action';
 
 import Iconify from '../components/Iconify';
 // sections
@@ -27,6 +27,7 @@ import {
   Application,
   AppCurrentSubject,
   CodeSnippet,
+  AuthPanel,
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -73,6 +74,7 @@ export default function DashboardApp() {
           dispatch(setEmail(data.email));
           dispatch(setPhoto(data.photo));
           dispatch(setuserDatabases(data.databases));
+          dispatch(setuserAuthInfo(data.auth));
         })
         .then(() => {
           setauthState(true);
@@ -85,6 +87,90 @@ export default function DashboardApp() {
         });
     } else {
       navigate('/login');
+    }
+  };
+  const AppPanel = () => {
+    if (applicationtype === 'Database') {
+      return (
+        <ApplicationPanel
+          title={applicationtype}
+          subheader="+ Create Database"
+          chartLabels={[
+            '01/01/2003',
+            '02/01/2003',
+            '03/01/2003',
+            '04/01/2003',
+            '05/01/2003',
+            '06/01/2003',
+            '07/01/2003',
+            '08/01/2003',
+            '09/01/2003',
+            '10/01/2003',
+            '11/01/2003',
+          ]}
+          chartData={[
+            {
+              name: 'Team A',
+              type: 'column',
+              fill: 'solid',
+              data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+            },
+            {
+              name: 'Team B',
+              type: 'area',
+              fill: 'gradient',
+              data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+            },
+            {
+              name: 'Team C',
+              type: 'line',
+              fill: 'solid',
+              data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+            },
+          ]}
+        />
+      );
+    }
+    if (applicationtype === 'Authentication') {
+      return (
+        <AuthPanel
+          title={applicationtype}
+          subheader="+ Add Authentication"
+          chartLabels={[
+            '01/01/2003',
+            '02/01/2003',
+            '03/01/2003',
+            '04/01/2003',
+            '05/01/2003',
+            '06/01/2003',
+            '07/01/2003',
+            '08/01/2003',
+            '09/01/2003',
+            '10/01/2003',
+            '11/01/2003',
+          ]}
+          chartData={[
+            {
+              name: 'Team A',
+              type: 'column',
+              fill: 'solid',
+              data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+            },
+            {
+              name: 'Team B',
+              type: 'area',
+              fill: 'gradient',
+              data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+            },
+            {
+              name: 'Team C',
+              type: 'line',
+              fill: 'solid',
+              data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+            },
+          ]}
+        />
+      );
     }
   };
   useEffect(() => {
@@ -110,7 +196,7 @@ export default function DashboardApp() {
 
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status="active"
+              status="In development"
               name={'Storage'}
               icon={'clarity:storage-solid'}
               setApplication={setApplication}
@@ -130,7 +216,7 @@ export default function DashboardApp() {
           <Grid item xs={12} sm={6} md={3}>
             <Application
               status="In development"
-              name={'Messaging'}
+              name={'Payments'}
               ccolor="info"
               icon={'ant-design:message-filled'}
               setApplication={setApplication}
@@ -138,43 +224,7 @@ export default function DashboardApp() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={12}>
-            <ApplicationPanel
-              title={applicationtype}
-              subheader="+ Create Database"
-              chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ]}
-              chartData={[
-                {
-                  name: 'Team A',
-                  type: 'column',
-                  fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-                },
-                {
-                  name: 'Team B',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Team C',
-                  type: 'line',
-                  fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-              ]}
-            />
+            <AppPanel />
           </Grid>
 
           {/* <Grid item xs={12} md={6} lg={4}>

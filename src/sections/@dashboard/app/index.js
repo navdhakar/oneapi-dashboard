@@ -4,6 +4,8 @@ export { default as AppCurrentVisits } from './AppCurrentVisits';
 export { default as AppOrderTimeline } from './AppOrderTimeline';
 export { default as AppTrafficBySite } from './AppTrafficBySite';
 export { default as ApplicationPanel } from './ApplicationPanel';
+export { default as AuthPanel } from './AuthPanel';
+
 export { default as Application } from './Application';
 export { default as Application2 } from './Application2';
 
