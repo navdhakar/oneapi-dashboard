@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -8,10 +10,12 @@ import useResponsive from '../hooks/useResponsive';
 import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
-import { AutoLinkForm } from '../sections/auth/register';
+import { OnePayment } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
 import autolink from '../assets/autolink.png';
+
+import { makeGETRequest } from '../Api/Apikit';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +37,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7),
+    padding: theme.spacing(0, 5, 0, 7),
   },
 }));
 
@@ -58,33 +62,37 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Register() {
+export default function AutoLinkPayment() {
+  const [Email, setEmail] = useState('');
+  const [Name, setName] = useState('');
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
-
+  useEffect(() => {
+    const url = window.location.href.split('/');
+    const lastSegment = url.pop() || url.pop();
+    makeGETRequest(`/unify/paymentservices/reciever/${lastSegment}`).then((res) => {
+      console.log(res);
+      setName(res.name);
+      setEmail(res.email);
+    });
+  });
   return (
-    <Page title="AutoLink">
+    <Page title="PayLinkPayments">
       <RootStyle>
         <HeaderStyle>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <img src={autolink} alt="photoURL" style={{ width: 50 }} />
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
-            <Typography variant="h4" sx={{}} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              Auto <span style={{ color: '#118C4F' }}>Link</span>
+            <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              <span style={{ color: '#118C4F' }}>Pay</span>
+              <span style={{ color: '#00d36b' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: -2 } }}>
+            <Typography variant="body2" sx={{ mt: 5 }}>
               AutoLink powered by {''}
-              <Link variant="subtitle2" component={RouterLink} to="/login">
+              <Link variant="subtitle2" href="https://oneapiapp.vercel.app/">
                 OneAPI
               </Link>
             </Typography>
@@ -93,28 +101,24 @@ export default function Register() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h4" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              Create payment link in one click <span style={{ color: '#118C4F' }}>and </span> trigger action when
-              payment recieved.
+            <Typography variant="h4" sx={{ px: 5, mt: 10, mb: 5 }}>
+              💵Enter Payment <span style={{ color: '#00d36b' }}>amount</span>
             </Typography>
             <img alt="register" src="/static/illustrations/payment.jpg" />
           </SectionStyle>
         )}
-
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Create Auto Triggered payment links.
+              Payment to <span style={{ color: '#00d36b' }}>{Name}</span>
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-              As soon as your customer pays specific action will be triggered.
-            </Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>
 
-            <AutoLinkForm />
+            <OnePayment />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to AutoLink&nbsp;
+              By paying, I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
               </Link>
@@ -127,7 +131,10 @@ export default function Register() {
 
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                AutoLink is Built on top of OneAPI
+                Already have an account?{' '}
+                <Link variant="subtitle2" to="/login" component={RouterLink}>
+                  Login
+                </Link>
               </Typography>
             )}
           </ContentStyle>

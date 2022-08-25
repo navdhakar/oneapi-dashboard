@@ -78,16 +78,17 @@ export default function PaymentSuccess() {
       <RootStyle>
         <HeaderStyle>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <img src={autolink} alt="photoURL" style={{ width: 50 }} />
+            <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
-            <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              Auto <span style={{ color: '#118C4F' }}>Link</span>
+            <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              <span style={{ color: '#118C4F' }}>Pay</span>
+              <span style={{ color: '#00d36b' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: -2 } }}>
+            <Typography variant="body2" sx={{ mt: 5 }}>
               AutoLink powered by {''}
-              <Link variant="subtitle2" component={RouterLink} to="/login">
+              <Link variant="subtitle2" href="https://oneapiapp.vercel.app/">
                 OneAPI
               </Link>
             </Typography>
@@ -96,8 +97,8 @@ export default function PaymentSuccess() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              ✅Payment <span style={{ color: '#118C4F' }}>complete</span>
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+              ✅Payment <span style={{ color: '#00d36b' }}>complete</span>
             </Typography>
             <img alt="register" src="/static/illustrations/payment.jpg" />
           </SectionStyle>
@@ -107,7 +108,7 @@ export default function PaymentSuccess() {
             <img alt="register" src="/static/illustrations/transaction_complete.jpg" />
 
             <Typography variant="h4" gutterBottom>
-              ✅Hurray, <span style={{ color: '#118C4F' }}>{Name}</span> Payment successfull
+              ✅Hurray, <span style={{ color: '#00d36b' }}>{Name}</span> Payment successfull
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>

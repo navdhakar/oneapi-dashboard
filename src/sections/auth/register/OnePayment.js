@@ -6,13 +6,14 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Stack, IconButton, InputAdornment, TextField, Button, Box } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Button, Box, Alert, CircularProgress } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import { UNIFY_URI } from '../../../config';
 import { makePostRequest, makeGETRequest } from '../../../Api/Apikit';
+
 // ----------------------------------------------------------------------
 
 export default function OnePayment() {
@@ -20,9 +21,16 @@ export default function OnePayment() {
 
   const [Email, setEmail] = useState('');
   const [senderEmail, setsenderEmail] = useState('');
-
+  const [triggerdata, settriggerdata] = useState('');
+  const [PhoneNo, setPhoneNo] = useState('');
+  const [urlToken, seturlToken] = useState('');
   const [Amount, setAmount] = useState(0);
   const [Name, setName] = useState('');
+  const [rzpOID, setrzpOID] = useState('');
+  const [rzpSIG, setrzpSIG] = useState('');
+  const [alert, setalert] = useState(false);
+  const [alerttext, setalerttext] = useState('');
+  const [loading, setloading] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name required'),
@@ -51,11 +59,19 @@ export default function OnePayment() {
   useEffect(() => {
     const url = window.location.href.split('/');
     const lastSegment = url.pop() || url.pop();
-    makeGETRequest(`/unify/paymentservices/reciever/${lastSegment}`).then((res) => {
-      console.log(res);
-      setEmail(res.email);
-      setName(res.name);
-    });
+    seturlToken(lastSegment);
+    makeGETRequest(`/unify/paymentservices/reciever/${lastSegment}`)
+      .then((res) => {
+        console.log(res);
+        setEmail(res.email);
+        setName(res.name);
+        settriggerdata(res.triggerdata);
+      })
+      .catch((e) => {
+        console.log(e);
+        setalerttext('server is down, please try again!!');
+        setalert(true);
+      });
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
@@ -77,22 +93,48 @@ export default function OnePayment() {
           razorpay_order_id: response.razorpay_order_id,
           transactionid: response.razorpay_payment_id,
           transactionamount: amount,
-          databaseName: Name,
+          databaseName: Email.substring(0, Email.indexOf('@')),
           email: senderEmail,
+          emailText: triggerdata,
+          nameMReciever: Name,
+          phoneno: PhoneNo,
         };
         makePostRequest('/Payments/InitPayments/payment', values)
           .then((res) => {
-            navigate(`/paymentsuccess/${senderEmail}`);
+            const data = {
+              dueamount: res.transaction.transactionamount,
+              transactionid: res.transaction.transactionid,
+              razorpay_order_id: res.transaction.rzpoid,
+              razorpay_signature: res.transaction.rzpsig,
+            };
+            console.log(data);
+            makePostRequest(`/unify/paymentservices/update/${urlToken}`, data)
+              .then((resp) => {
+                setloading(false);
+                console.log(resp);
+                navigate(`/paymentsuccess/${senderEmail}`);
+              })
+              .catch((e) => {
+                console.log(e);
+                setalerttext('oops!!, your payment was not updated, contact support');
+                setloading(false);
+                setalert(true);
+              });
           })
-          .catch((e) => console.log(e));
+          .catch((e) => {
+            console.log(e);
+            setalerttext('Payment was not successfull');
+            setloading(false);
+            setalert(true);
+          });
       },
       prefill: {
         name: 'navdeep',
         email: senderEmail,
-        contact: '1234567890',
+        contact: String(PhoneNo),
       },
       notes: {
-        address: 'Hello World',
+        address: `payment to ${Email}`,
       },
       theme: {
         color: '#528ff0',
@@ -101,15 +143,24 @@ export default function OnePayment() {
 
     makePostRequest('/Payments/InitPayments/order', { amount: amount })
       .then((res) => {
+        setloading(true);
+
         options.order_id = res.id;
         options.amount = res.amount;
         console.log(options);
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setloading(false);
+      });
   };
-
+  const Loading = () => {
+    if (loading === true) {
+      return <CircularProgress sx={{ color: '#118C4F' }} />;
+    }
+  };
   return (
     <Stack spacing={3}>
       <TextField
@@ -117,6 +168,14 @@ export default function OnePayment() {
         label="Your email address"
         onChange={(e) => {
           setsenderEmail(e.target.value);
+        }}
+      />
+      <TextField
+        Name="phone no"
+        label="Phone Number"
+        type={'number'}
+        onChange={(e) => {
+          setPhoneNo(e.target.value);
         }}
       />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -137,14 +196,15 @@ export default function OnePayment() {
         size="large"
         type="submit"
         variant="contained"
-        sx={{ backgroundColor: '#118C4F' }}
+        sx={{ backgroundColor: '#00d36b' }}
         loading={isSubmitting}
         onClick={() => {
           openPayModal();
         }}
       >
-        Pay
+        {loading ? <Loading /> : 'Pay'}
       </LoadingButton>
+      {alert ? <Alert severity="error">{alerttext}</Alert> : null}
     </Stack>
   );
 }

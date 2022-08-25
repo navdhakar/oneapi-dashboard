@@ -11,8 +11,8 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import DashboardApp2 from './pages/DashboardApp2';
-import AutoLink from './pages/AutoLink';
-import AutoLinkPayment from './pages/AutoLinkPayment';
+import PayLink from './pages/PayLink';
+import PayLinkPayment from './pages/PayLinkPayment';
 import PaymentSuccess from './pages/PaymentSuccess';
 
 // ----------------------------------------------------------------------
@@ -37,8 +37,8 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard/server" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
-        { path: 'autolink', element: <AutoLink /> },
-        { path: 'autolinkpayment/:urltoken', element: <AutoLinkPayment /> },
+        { path: 'paylink', element: <PayLink /> },
+        { path: 'paylinkpayment/:urltoken', element: <PayLinkPayment /> },
         { path: 'paymentsuccess/:name', element: <PaymentSuccess /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
