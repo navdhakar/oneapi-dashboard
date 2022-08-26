@@ -102,8 +102,15 @@ export default function AutoLinkForm() {
     makePostRequest('/unify/paymentservices/enable', data)
       .then((res) => {
         console.log(res);
-        setloading(false);
-        navigate(`/paylinkpayment/${res.urlToken}`);
+        const maildata = {
+          email: Email,
+          paylink: `https://oneapi.vercel.app/paylinkpayment/${res.urlToken}`,
+          name: Name,
+        };
+        makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
+          setloading(false);
+          navigate(`/paylinkpayment/${res.urlToken}`);
+        });
       })
       .catch((err) => {
         console.log(err);

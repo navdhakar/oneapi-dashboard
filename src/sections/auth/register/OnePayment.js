@@ -98,6 +98,7 @@ export default function OnePayment() {
           emailText: triggerdata,
           nameMReciever: Name,
           phoneno: PhoneNo,
+          EmailMReciever: Email,
         };
         makePostRequest('/Payments/InitPayments/payment', values)
           .then((res) => {
