@@ -119,11 +119,11 @@ export default function AutoLinkPayment() {
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
               By paying, I agree to PayLink&nbsp;
-              <Link underline="always" color="text.primary" href="#">
+              <Link underline="always" color="text.primary" href="https://plink.vercel.app/termsofuse.html">
                 Terms of Service
               </Link>{' '}
               and{' '}
-              <Link underline="always" color="text.primary" href="#">
+              <Link underline="always" color="text.primary" href="https://plink.vercel.app/privacypolicy.html">
                 Privacy Policy
               </Link>
               .
