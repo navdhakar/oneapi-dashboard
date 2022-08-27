@@ -11,7 +11,7 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
-import { UNIFY_URI } from '../../../config';
+import { UNIFY_URI, RZR_KEYID } from '../../../config';
 import { makePostRequest, makeGETRequest } from '../../../Api/Apikit';
 
 // ----------------------------------------------------------------------
@@ -81,7 +81,7 @@ export default function OnePayment() {
   const openPayModal = () => {
     const amount = Number(Amount) * 100;
     const options = {
-      key: 'rzp_test_2x7BgqQ0pkYHTZ',
+      key: RZR_KEYID,
       amount: 0, // 2000 paise = INR 20, amount in paisa
       name: '',
       description: '',

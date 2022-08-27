@@ -87,7 +87,7 @@ export default function PaymentSuccess() {
           </div>
           {smUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
-              AutoLink powered by {''}
+              PayLink powered by {''}
               <Link variant="subtitle2" href="https://oneapiapp.vercel.app/">
                 OneAPI
               </Link>
@@ -114,11 +114,11 @@ export default function PaymentSuccess() {
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By paying, I agree to AutoLink&nbsp;
+              By paying, I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
-              </Link>
-              {''}and{''}
+              </Link>{' '}
+              and{' '}
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>

@@ -121,8 +121,8 @@ export default function AutoLinkPayment() {
               By paying, I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
-              </Link>
-              {''}and{''}
+              </Link>{' '}
+              and{' '}
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>

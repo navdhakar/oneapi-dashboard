@@ -112,8 +112,8 @@ export default function Register() {
               By registering, I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
-              </Link>
-              {''}and{''}
+              </Link>{' '}
+              and{' '}
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>
