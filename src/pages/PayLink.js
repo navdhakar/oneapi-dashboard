@@ -116,6 +116,10 @@ export default function Register() {
               and{' '}
               <Link underline="always" color="text.primary" href="https://plink.vercel.app/privacypolicy.html">
                 Privacy Policy
+              </Link>{' '}
+              and{' '}
+              <Link underline="always" color="text.primary" href="https://plink.vercel.app/merchantagreement.html">
+                Merchant Agreement
               </Link>
               .
             </Typography>
