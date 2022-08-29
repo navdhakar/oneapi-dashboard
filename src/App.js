@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
-
+import ReactGa from 'react-ga';
 import { set } from 'lodash';
 // routes
 import Register from './pages/Register';
@@ -19,6 +19,10 @@ import { UNIFY_URI } from './config';
 // ----------------------------------------------------------------------
 
 export default function App() {
+  useEffect(() => {
+    ReactGa.initialize('UA-214532842-1');
+    ReactGa.pageview(window.location.pathname + window.location.search);
+  }, []);
   return (
     <ThemeProvider>
       <ScrollToTop />
