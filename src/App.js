@@ -20,7 +20,8 @@ import { UNIFY_URI } from './config';
 
 export default function App() {
   useEffect(() => {
-    ReactGa.initialize('UA-214532842-1');
+    console.log('app');
+    ReactGa.initialize('UA-214532842-2');
     ReactGa.pageview(window.location.pathname + window.location.search);
   }, []);
   return (
