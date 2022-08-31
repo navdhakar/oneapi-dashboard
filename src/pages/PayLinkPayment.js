@@ -65,6 +65,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function AutoLinkPayment() {
   const [Email, setEmail] = useState('');
   const [Name, setName] = useState('');
+  const [ProductName, setProductName] = useState('');
+
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -75,6 +77,7 @@ export default function AutoLinkPayment() {
       console.log(res);
       setName(res.name);
       setEmail(res.email);
+      setProductName(res.productname);
     });
   });
   return (
@@ -101,7 +104,7 @@ export default function AutoLinkPayment() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h4" sx={{ px: 5, mt: 10, mb: 5 }}>
+            <Typography variant="h4" sx={{ px: 5, mt: 5, mb: 5 }}>
               💵Enter Payment <span style={{ color: '#00d36b' }}>amount</span>
             </Typography>
             <img alt="register" src="/static/illustrations/payment.jpg" />
@@ -110,13 +113,12 @@ export default function AutoLinkPayment() {
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Payment to <span style={{ color: '#00d36b' }}>{Name}</span>
+              Payment to <span style={{ color: '#db542f' }}>{Name}</span> for{' '}
+              <span style={{ color: '#00d36b' }}>{ProductName}</span>
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>
-
             <OnePayment />
-
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
               By paying, I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="https://plink.vercel.app/termsofuse.html">
@@ -132,7 +134,6 @@ export default function AutoLinkPayment() {
               </Link>
               .
             </Typography>
-
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
                 Already have an account?{' '}

@@ -44,6 +44,7 @@ export default function AutoLinkForm() {
   const [alerttext, setalerttext] = useState('');
   const [loading, setloading] = useState(false);
   const [Amount, setAmount] = useState(0);
+  const [ProductName, setProductName] = useState('');
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name required'),
@@ -100,6 +101,7 @@ export default function AutoLinkForm() {
       trigger: 'Email',
       triggerdata: Triggerdata,
       amount: Amount,
+      productname: ProductName,
     };
     makePostRequest('/unify/paymentservices/enable', data)
       .then((res) => {
@@ -141,6 +143,9 @@ export default function AutoLinkForm() {
   const handletamount = (event) => {
     setAmount(event.target.value);
   };
+  const handletproductname = (event) => {
+    setProductName(event.target.value);
+  };
   const Loading = () => {
     if (loading === true) {
       return <CircularProgress sx={{ color: '#118C4F' }} />;
@@ -176,6 +181,8 @@ export default function AutoLinkForm() {
           <TextField Name="otp" label="OTP" type={'number'} onChange={handleOTP} />
           <TextField Name="account no" label="Account Number" type={'number'} onChange={handleaccount} />
           <TextField Name="name" label="Account Holder Name" onChange={handleName} />
+          <TextField Name="product name" label="Product Name" onChange={handletproductname} />
+
           <TextField Name="amount" label="Amount" onChange={handletamount} />
 
           <TextField Name="IFSC code" label="IFSC Code" onChange={handleifsc} />
