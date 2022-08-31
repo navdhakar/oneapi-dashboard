@@ -66,6 +66,7 @@ export default function OnePayment() {
         setEmail(res.email);
         setName(res.name);
         settriggerdata(res.triggerdata);
+        setAmount(res.amount);
       })
       .catch((e) => {
         console.log(e);
@@ -186,9 +187,10 @@ export default function OnePayment() {
           Name="amount"
           label="Amount"
           type={'number'}
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
+          value={Amount}
+          // onChange={(e) => {
+          //   setAmount(e.target.value);
+          // }}
         />
       </Box>
 
