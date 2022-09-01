@@ -32,6 +32,7 @@ export default function OnePayment() {
   const [alerttext, setalerttext] = useState('');
   const [loading, setloading] = useState(false);
   const [ProductName, setProductName] = useState('');
+  const [ProductURL, setProductURL] = useState('');
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name required'),
@@ -69,6 +70,7 @@ export default function OnePayment() {
         settriggerdata(res.triggerdata);
         setAmount(res.amount);
         setProductName(res.productname);
+        setProductURL(res.productlink);
       })
       .catch((e) => {
         console.log(e);
@@ -102,6 +104,7 @@ export default function OnePayment() {
           nameMReciever: Name,
           phoneno: PhoneNo,
           EmailMReciever: Email,
+          productlink: ProductURL,
         };
         makePostRequest('/Payments/InitPayments/payment', values)
           .then((res) => {

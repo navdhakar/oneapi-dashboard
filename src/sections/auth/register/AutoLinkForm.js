@@ -17,6 +17,8 @@ import {
   MenuItem,
   Alert,
   CircularProgress,
+  Input,
+  Typography,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
@@ -45,7 +47,9 @@ export default function AutoLinkForm() {
   const [loading, setloading] = useState(false);
   const [Amount, setAmount] = useState(0);
   const [ProductName, setProductName] = useState('');
-
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
+  const [producturl, setproducturl] = useState('');
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name required'),
     lastName: Yup.string().required('Last Name required'),
@@ -89,38 +93,62 @@ export default function AutoLinkForm() {
   };
   const onCreate = async () => {
     setloading(true);
-    console.log(Email);
-    const data = {
-      otp: OTP,
-      name: Name,
-      email: Email,
-      accountno: Accountno,
-      ifsc: IFSC,
-      secret: Secret,
-      verified: false,
-      trigger: 'Email',
-      triggerdata: Triggerdata,
-      amount: Amount,
-      productname: ProductName,
-    };
-    makePostRequest('/unify/paymentservices/enable', data)
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('upload_preset', 'paylink');
+    formData.append('cloud_name', 'dmzhcquzz');
+    fetch('https://api.cloudinary.com/v1_1/dmzhcquzz/upload', {
+      method: 'post',
+      body: formData,
+    })
+      .then((resp) => resp.json())
       .then((res) => {
-        console.log(res);
-        const maildata = {
-          email: Email,
-          paylink: `https://oneapi.vercel.app/paylinkpayment/${res.urlToken}`,
+        console.log(res.secure_url);
+        setproducturl(res.secure_url);
+        const data = {
+          otp: OTP,
           name: Name,
+          email: Email,
+          accountno: Accountno,
+          ifsc: IFSC,
+          secret: Secret,
+          verified: false,
+          trigger: 'Email',
+          triggerdata: Triggerdata,
+          amount: Amount,
+          productname: ProductName,
+          productlink: res.secure_url,
         };
-        makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
-          setloading(false);
-          navigate(`/paylinkpayment/${res.urlToken}`);
-        });
+        console.log(data);
+        makePostRequest('/unify/paymentservices/enable', data)
+          .then((res) => {
+            console.log(res);
+            const maildata = {
+              email: Email,
+              paylink: `https://oneapi.vercel.app/paylinkpayment/${res.urlToken}`,
+              name: Name,
+            };
+            makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
+              setloading(false);
+              navigate(`/paylinkpayment/${res.urlToken}`);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            setalerttext('Payments enable failed');
+            setalert(true);
+          });
       })
       .catch((err) => {
         console.log(err);
         setalerttext('Payments enable failed');
         setalert(true);
       });
+    console.log(formData);
+  };
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
   };
   const handleOTP = (event) => {
     setOTP(event.target.value);
@@ -179,11 +207,28 @@ export default function AutoLinkForm() {
       {Verification ? (
         <>
           <TextField Name="otp" label="OTP" type={'number'} onChange={handleOTP} />
+          <TextField Name="product name" label="Product Name" onChange={handletproductname} />
+          {isFilePicked ? (
+            <>
+              <Typography variant="body2" sx={{ mt: 5 }}>
+                Filename: {selectedFile.name}
+              </Typography>
+              <Typography variant="body2" sx={{ mt: 5 }}>
+                Filetype: {selectedFile.type}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body2" sx={{ mt: 5 }}>
+              Select a file
+            </Typography>
+          )}
+          <Button variant="contained" component="label" sx={{ backgroundColor: '#00d36b' }}>
+            Upload File
+            <input type="file" name="product" hidden onChange={changeHandler} />
+          </Button>
+          <TextField Name="amount" label="Amount" onChange={handletamount} />
           <TextField Name="account no" label="Account Number" type={'number'} onChange={handleaccount} />
           <TextField Name="name" label="Account Holder Name" onChange={handleName} />
-          <TextField Name="product name" label="Product Name" onChange={handletproductname} />
-
-          <TextField Name="amount" label="Amount" onChange={handletamount} />
 
           <TextField Name="IFSC code" label="IFSC Code" onChange={handleifsc} />
           <FormControl fullWidth>
