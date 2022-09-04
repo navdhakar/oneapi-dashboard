@@ -125,7 +125,7 @@ export default function AutoLinkForm() {
             console.log(res);
             const maildata = {
               email: Email,
-              paylink: `https://oneapi.vercel.app/paylinkpayment/${res.urlToken}`,
+              paylink: `https://oneapi.in.net/paylinkpayment/${res.urlToken}`,
               name: Name,
             };
             makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
@@ -238,7 +238,11 @@ export default function AutoLinkForm() {
               <MenuItem value={'SMS'}>SMS</MenuItem>
             </Select>
           </FormControl>
-          <TextField Name="trigger data" label="Email text recieved by sender" onChange={handletriggerdata} />
+          <TextField
+            Name="trigger data"
+            label="Your personalized message for every customer"
+            onChange={handletriggerdata}
+          />
 
           <TextField Name="Secret" label="Secret" onChange={handlesecret} />
           <Button
