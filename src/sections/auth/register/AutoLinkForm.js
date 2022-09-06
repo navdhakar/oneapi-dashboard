@@ -183,7 +183,7 @@ export default function AutoLinkForm() {
     <Stack spacing={3}>
       <TextField
         Name="email"
-        label="Email address"
+        label="PayPal Email address"
         onChange={(e) => {
           setEmail(e.target.value);
         }}

@@ -186,7 +186,7 @@ export default function OnePayment() {
         }}
       />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Iconify icon={'bx:rupee'} width={24} height={24} />
+        <Iconify icon={'carbon:currency-dollar'} width={24} height={24} />
 
         <TextField
           Name="amount"
