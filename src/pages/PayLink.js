@@ -103,7 +103,11 @@ export default function Register() {
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-              As soon as your customer pays specific action will be triggered(if not indian leave Account/IFSC empty ).
+              As soon as your customer pays specific action will be triggered
+              <span style={{ color: '#1877F2', fontFamily: 'Roboto Mono, monospace' }}>
+                (if not indian leave Account/IFSC empty)
+              </span>
+              .
             </Typography>
 
             <AutoLinkForm />

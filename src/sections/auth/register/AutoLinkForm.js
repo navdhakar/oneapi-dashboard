@@ -226,7 +226,7 @@ export default function AutoLinkForm() {
             Upload File
             <input type="file" name="product" hidden onChange={changeHandler} />
           </Button>
-          <TextField Name="amount" label="Amount" onChange={handletamount} />
+          <TextField Name="amount" label="Amount($) in USD" onChange={handletamount} />
           <TextField Name="account no" label="Account Number" type={'number'} onChange={handleaccount} />
           <TextField Name="name" label="Account Holder Name" onChange={handleName} />
 
