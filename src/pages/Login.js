@@ -10,7 +10,7 @@ import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
 import AuthSocial from '../sections/auth/AuthSocial';
-import oneapi from '../assets/oneapi.png';
+import autolink from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------
 
@@ -67,10 +67,11 @@ export default function Login() {
       <RootStyle>
         <HeaderStyle>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
+            <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
-            <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              One <span style={{ color: '#1877F2' }}>API</span>
+            <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              <span style={{ color: '#0a2441' }}>Pay</span>
+              <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
 
@@ -86,7 +87,7 @@ export default function Login() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h2" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
               <span style={{ color: '#1877F2' }}>Hi</span>, Welcome Back
             </Typography>
             <img src="/static/illustrations/illustration_login.png" alt="login" />
@@ -96,14 +97,15 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to PayLink
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Login through google signin.</Typography>
 
             <AuthSocial />
 
-            <LoginForm />
+            {/* <LoginForm /> */}
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Coming soon</Typography>
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>

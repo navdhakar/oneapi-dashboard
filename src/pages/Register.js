@@ -11,7 +11,7 @@ import Logo from '../components/Logo';
 import { RegisterForm } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
-import oneapi from '../assets/oneapi.png';
+import autolink from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------
 
@@ -68,10 +68,11 @@ export default function Register() {
       <RootStyle>
         <HeaderStyle>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <img src={oneapi} alt="photoURL" style={{ width: 50 }} />
+            <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
-            <Typography variant="h4" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              One <span style={{ color: '#1877F2' }}>API</span>
+            <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              <span style={{ color: '#0a2441' }}>Pay</span>
+              <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
@@ -86,8 +87,8 @@ export default function Register() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h2" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              Your high performance backend just one <span style={{ color: '#1877F2' }}>API</span> call away.
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
+              Payment automation for your website/product in <span style={{ color: '#1877F2' }}>3 clicks</span>.
             </Typography>
             <img alt="register" src="/static/illustrations/illustration_register.png" />
           </SectionStyle>
@@ -99,11 +100,11 @@ export default function Register() {
               Get started absolutely free.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>No credit card needed.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Experience the no code payments service.</Typography>
 
             <AuthSocial />
 
-            <RegisterForm />
+            {/* <RegisterForm /> */}
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
               By registering, I agree to Minimal&nbsp;
