@@ -4,6 +4,7 @@ export const SET_USER_PHOTO = 'SET_USER_PHOTO';
 export const SET_USER_JWT_TOKEN = 'SET_USER_JWT_TOKEN';
 export const SET_USER_DATABASES = 'SET_USER_DATABASES';
 export const SET_USER_AUTH_INFO = 'SET_USER_AUTH_INFO';
+export const SET_PAY_URL_TOKEN = 'SET_PAY_URL_TOKEN';
 
 export const setName = (name) => (dispatch) => {
   dispatch({
@@ -40,5 +41,11 @@ export const setuserAuthInfo = (userauthinfo) => (dispatch) => {
   dispatch({
     type: SET_USER_AUTH_INFO,
     payload: userauthinfo,
+  });
+};
+export const seturlToken = (urltoken) => (dispatch) => {
+  dispatch({
+    type: SET_PAY_URL_TOKEN,
+    payload: urltoken,
   });
 };

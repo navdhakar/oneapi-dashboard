@@ -14,6 +14,7 @@ import DashboardApp2 from './pages/DashboardApp2';
 import PayLink from './pages/PayLink';
 import PayLinkPayment from './pages/PayLinkPayment';
 import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentDashboard from './pages/PaymentDashboard';
 
 // ----------------------------------------------------------------------
 
@@ -28,16 +29,19 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'paylink', element: <PaymentDashboard /> },
       ],
     },
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/server" /> },
+        { path: '/', element: <Navigate to="/dashboard/paylink" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: 'paylink', element: <PayLink /> },
+        { path: 'paylinkdashboard', element: <PaymentDashboard /> },
+
         { path: 'paylinkpayment/:urltoken', element: <PayLinkPayment /> },
         { path: 'paymentsuccess/:name', element: <PaymentSuccess /> },
         { path: '404', element: <NotFound /> },

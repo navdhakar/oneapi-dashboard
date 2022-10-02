@@ -67,7 +67,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Avatar src={oneapi} alt="photoURL" />
 
         <Typography variant="subtitle1" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-          One <span style={{ color: '#1877F2' }}>API</span>
+          Pay <span style={{ color: '#1877F2' }}>Link</span>
         </Typography>
       </div>
       <Box sx={{ mb: 5, mx: 1 }}>
@@ -95,20 +95,20 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
 
           <Typography variant="h3" sx={{ px: 5, mt: 10 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-            One <span style={{ color: '#1877F2' }}>API</span>
+            Pay <span style={{ color: '#1877F2' }}>Link</span>
           </Typography>
 
           <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6">
-              Get more?
+              Get help
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              experience the performance
+              DM me personally for any support
             </Typography>
           </Box>
 
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade
+          <Button href="https://twitter.com/dev_navdeep" target="_blank" variant="contained">
+            Help
           </Button>
         </Stack>
       </Box>

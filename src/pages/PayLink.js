@@ -11,7 +11,7 @@ import Logo from '../components/Logo';
 import { AutoLinkForm } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
-import autolink from '../assets/autolink.png';
+import autolink from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(0, 5, 0, 7),
+    padding: theme.spacing(0, 2, 0, 4),
   },
 }));
 
@@ -71,8 +71,8 @@ export default function Register() {
             <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
             <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              <span style={{ color: '#118C4F' }}>Pay</span>
-              <span style={{ color: '#00d36b' }}>Link</span>
+              <span style={{ color: '#0a2441' }}>Pay</span>
+              <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
@@ -89,10 +89,10 @@ export default function Register() {
           <SectionStyle>
             <Typography variant="h4" sx={{ px: 5, mt: 10, mb: 5 }}>
               Create payment link in one click{' '}
-              <span style={{ color: '#00d36b', fontFamily: 'Roboto Mono, monospace' }}>and </span> trigger action when
+              <span style={{ color: '#2681f8', fontFamily: 'Roboto Mono, monospace' }}>and </span> trigger action when
               payment recieved.
             </Typography>
-            <img alt="register" src="/static/illustrations/payment.jpg" />
+            <img alt="register" src="/static/illustrations/payment.png" />
           </SectionStyle>
         )}
 

@@ -18,7 +18,7 @@ CodeSnippet.propTypes = {
   chartData: PropTypes.array.isRequired,
 };
 
-export default function CodeSnippet({ title, subheader, chartData, ...other }) {
+export default function CodeSnippet({ title, subheader, link, chartData, ...other }) {
   const [code, setcode] = useState('');
 
   const DatabaseAPI = `const postData = async (dbURI, data) => {
@@ -74,10 +74,19 @@ const getData = async (dbURI/CollectionName) => {
     }
   ]
 }*/}`;
+
+  const PaymentCode = `
+  <a href="https://app.nocodepayments.dev/paylinkpayment/<URLToken>" class="ud-main-btn ud-white-btn">
+    Purchase Now
+  <a>`;
+
   useEffect(() => {
     console.log(title);
     if (title === 'Database') {
       setcode(DatabaseAPI);
+    }
+    if (title === 'Payments') {
+      setcode(PaymentCode);
     }
   }, [title]);
 
@@ -105,11 +114,11 @@ const getData = async (dbURI/CollectionName) => {
 
   return (
     <Card {...other}>
-      <CardHeader title={`${title} API`} subheader={subheader} />
+      <CardHeader title={subheader} subheader={`URLToken: ${link}`} />
 
       <CopyBlock
         text={code}
-        language={'javascript'}
+        language={'html'}
         showLineNumbers={false}
         startingLineNumber={1}
         theme={obsidian}

@@ -13,7 +13,7 @@ import Logo from '../components/Logo';
 import { OnePayment } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
-import autolink from '../assets/autolink.png';
+import autolink from '../assets/oneapi.png';
 
 import { makeGETRequest } from '../Api/Apikit';
 
@@ -37,7 +37,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7),
+    padding: theme.spacing(0, 2, 0, 4),
   },
 }));
 
@@ -57,6 +57,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
+  alignItems: 'center',
   padding: theme.spacing(12, 0),
 }));
 
@@ -81,8 +82,8 @@ export default function PaymentSuccess() {
             <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
             <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              <span style={{ color: '#118C4F' }}>Pay</span>
-              <span style={{ color: '#00d36b' }}>Link</span>
+              <span style={{ color: '#0a2441' }}>Pay</span>
+              <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
@@ -98,22 +99,22 @@ export default function PaymentSuccess() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              ✅Payment <span style={{ color: '#00d36b' }}>complete</span>
+              Payment <span style={{ color: '#2681f8' }}>complete</span>
             </Typography>
-            <img alt="register" src="/static/illustrations/payment.jpg" />
+            <img alt="register" src="/static/illustrations/payment.png" />
           </SectionStyle>
         )}
         <Container>
           <ContentStyle>
-            <img alt="register" src="/static/illustrations/transaction_complete.jpg" />
+            <img alt="register" src="/static/illustrations/transaction_complete.png" style={{ width: '350px' }} />
 
             <Typography variant="h4" gutterBottom>
-              ✅Hurray, <span style={{ color: '#00d36b' }}>{Name}</span> Payment successfull
+              Thanks, <span style={{ color: '#2681f8' }}>{Name}</span> your Payment was successfull.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 2 }}>{Email}</Typography>
 
-            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 0 }}>
               I agree to PayLink&nbsp;
               <Link underline="always" color="text.primary" href="https://plink.vercel.app/termsofuse.html">
                 Terms of Service

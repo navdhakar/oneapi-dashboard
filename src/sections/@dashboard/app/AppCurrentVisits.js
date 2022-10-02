@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
+
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
 import { Card, CardHeader } from '@mui/material';
@@ -62,7 +63,7 @@ export default function AppCurrentVisits({ title, subheader, chartColors, chartD
       },
     },
     plotOptions: {
-      pie: { donut: { labels: { show: false } } },
+      pie: { donut: { labels: { show: true } } },
     },
   });
 
@@ -71,7 +72,7 @@ export default function AppCurrentVisits({ title, subheader, chartColors, chartD
       <CardHeader title={title} subheader={subheader} />
 
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
+        <ReactApexChart type="line" series={chartSeries} options={chartOptions} height={280} />
       </ChartWrapperStyle>
     </Card>
   );

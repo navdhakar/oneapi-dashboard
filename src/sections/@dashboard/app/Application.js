@@ -30,7 +30,7 @@ Application.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function Application({ status, name, icon, color = 'primary', sx, setApplication, ...other}) {
+export default function Application({ status, name, apptype, icon, color = 'primary', sx, setApplication, ...other }) {
   return (
     <Card
       sx={{
@@ -41,7 +41,7 @@ export default function Application({ status, name, icon, color = 'primary', sx,
         bgcolor: (theme) => theme.palette[color].lighter,
         ...sx,
       }}
-      onClick={e => setApplication(name)}
+      onClick={(e) => setApplication(apptype)}
       {...other}
     >
       <IconWrapperStyle

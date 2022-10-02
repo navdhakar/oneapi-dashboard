@@ -113,6 +113,7 @@ export default function OnePayment() {
               transactionid: res.transaction.transactionid,
               razorpay_order_id: res.transaction.rzpoid,
               razorpay_signature: res.transaction.rzpsig,
+              email: senderEmail,
             };
             console.log(data);
             makePostRequest(`/unify/paymentservices/update/${urlToken}`, data)
@@ -204,7 +205,7 @@ export default function OnePayment() {
         size="large"
         type="submit"
         variant="contained"
-        sx={{ backgroundColor: '#00d36b' }}
+        sx={{ backgroundColor: '#2681f8' }}
         loading={isSubmitting}
         onClick={() => {
           openPayModal();

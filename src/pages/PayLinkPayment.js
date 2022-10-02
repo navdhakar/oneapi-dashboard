@@ -13,7 +13,7 @@ import Logo from '../components/Logo';
 import { OnePayment } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
 import '../glob.css';
-import autolink from '../assets/autolink.png';
+import autolink from '../assets/oneapi.png';
 
 import { makeGETRequest } from '../Api/Apikit';
 
@@ -37,7 +37,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(0, 5, 0, 7),
+    padding: theme.spacing(0, 2, 0, 4),
   },
 }));
 
@@ -66,6 +66,7 @@ export default function AutoLinkPayment() {
   const [Email, setEmail] = useState('');
   const [Name, setName] = useState('');
   const [ProductName, setProductName] = useState('');
+  const [Amount, setAmount] = useState(0);
 
   const smUp = useResponsive('up', 'sm');
 
@@ -78,6 +79,7 @@ export default function AutoLinkPayment() {
       setName(res.name);
       setEmail(res.email);
       setProductName(res.productname);
+      setAmount(res.amount);
     });
   });
   return (
@@ -88,8 +90,8 @@ export default function AutoLinkPayment() {
             <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
             <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              <span style={{ color: '#118C4F' }}>Pay</span>
-              <span style={{ color: '#00d36b' }}>Link</span>
+              <span style={{ color: '#0a2441' }}>Pay</span>
+              <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
           {smUp && (
@@ -105,16 +107,16 @@ export default function AutoLinkPayment() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h4" sx={{ px: 5, mt: 5, mb: 5 }}>
-              💵Enter Payment <span style={{ color: '#00d36b' }}>amount</span>
+              Pay ${Amount} to Buy <span style={{ color: '#2681f8' }}>{ProductName}</span> now.
             </Typography>
-            <img alt="register" src="/static/illustrations/payment.jpg" />
+            <img alt="register" src="/static/illustrations/payment.png" />
           </SectionStyle>
         )}
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Payment to <span style={{ color: '#db542f' }}>{Name}</span> for{' '}
-              <span style={{ color: '#00d36b' }}>{ProductName}</span>
+              Payment to <span style={{ color: '#2681f8' }}>{Name}</span> for{' '}
+              <span style={{ color: '#2681f8' }}>{ProductName}</span>
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{Email}</Typography>

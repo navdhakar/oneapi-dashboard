@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, Navigate, useNavigate } from 'react-router-dom';
 
 import { faker } from '@faker-js/faker';
 import { set } from 'lodash';
 
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Button } from '@mui/material';
 // components
 import Page from '../components/Page';
 import Register from './Register';
@@ -22,6 +22,7 @@ import {
   setuserAuthInfo,
   seturlToken,
 } from '../redux/action';
+import { makeGETRequest } from '../Api/Apikit';
 
 import Iconify from '../components/Iconify';
 // sections
@@ -36,14 +37,21 @@ import {
   AppCurrentSubject,
   CodeSnippet,
   AuthPanel,
+  AppWebsiteVisits,
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardApp() {
+export default function PaymentDashboard() {
   const theme = useTheme();
-  const [applicationtype, setapplicationtype] = useState('Database');
+  const [applicationtype, setapplicationtype] = useState('Payments');
   const [authState, setauthState] = useState(false);
+  const [ProductName, setProductName] = useState('');
+  const [PaymentLink, setPaymentLink] = useState('');
+  const [ProductTrans, setProductTrans] = useState([]);
+  const [TotalPayment, setTotalPayment] = useState();
+  const [refreshdata, setrefreshdata] = useState(false);
+
   const navigate = useNavigate();
 
   const setApplication = (apptype) => {
@@ -52,7 +60,6 @@ export default function DashboardApp() {
   const [cookies, setCookie] = useCookies(['user']);
 
   const dispatch = useDispatch();
-  const userObj = useSelector((state) => state.authReducer);
 
   console.log(cookies.jwtToken);
 
@@ -88,6 +95,7 @@ export default function DashboardApp() {
         })
         .then(() => {
           setauthState(true);
+
           return true;
         })
         .catch((err) => {
@@ -99,6 +107,11 @@ export default function DashboardApp() {
       navigate('/login');
     }
   };
+
+  const Paylinkstart = () => {
+    navigate('/paylink');
+  };
+
   const AppPanel = () => {
     if (applicationtype === 'Database') {
       return (
@@ -183,9 +196,26 @@ export default function DashboardApp() {
       );
     }
   };
+
+  const userObj = useSelector((state) => state.authReducer);
+  console.log(userObj);
+  const getpaymentdata = () => {
+    makeGETRequest(`/unify/paymentservices/reciever/${userObj.urltoken}`).then((res) => {
+      setProductName(res.productname);
+      setPaymentLink(res.paymentlink);
+      setProductTrans(res.paymentslogs);
+      setTotalPayment(res.dueamount);
+    });
+    console.log(ProductTrans);
+  };
+  if (!ProductTrans) {
+    getpaymentdata();
+  }
   useEffect(() => {
     setauthState(authstate());
+    getpaymentdata();
   }, []);
+
   return authState ? (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -194,7 +224,7 @@ export default function DashboardApp() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <Application
               status="active"
               name={'Database'}
@@ -221,14 +251,15 @@ export default function DashboardApp() {
               icon={'carbon:two-factor-authentication'}
               setApplication={setApplication}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status="In development"
-              name={'Payments'}
-              ccolor="info"
-              icon={'ant-design:message-filled'}
+              status={userObj.urltoken ? 'Product' : 'Add Payment Now'}
+              name={userObj.urltoken ? ProductName : 'Payments'}
+              apptype={'Payments'}
+              color="info"
+              icon={'fa:product-hunt'}
               setApplication={setApplication}
             />
           </Grid>
@@ -237,43 +268,64 @@ export default function DashboardApp() {
             <AppPanel />
           </Grid>
 
-          {/* <Grid item xs={12} md={6} lg={4}>
-              <AppCurrentVisits
-                title="Current Visits"
-                chartData={[
-                  { label: 'America', value: 4344 },
-                  { label: 'Asia', value: 5435 },
-                  { label: 'Europe', value: 1443 },
-                  { label: 'Africa', value: 4443 },
-                ]}
-                chartColors={[
-                  theme.palette.primary.main,
-                  theme.palette.chart.blue[0],
-                  theme.palette.chart.violet[0],
-                  theme.palette.chart.yellow[0],
-                ]}
-              />
-            </Grid> */}
+          {userObj.urltoken ? (
+            <>
+              <Grid item xs={12} md={6} lg={8}>
+                <CodeSnippet
+                  title={applicationtype}
+                  subheader="Just embed this code in your Pricing table UI"
+                  link={PaymentLink}
+                  chartData={[
+                    { label: 'Italy', value: 400 },
+                    { label: 'Japan', value: 430 },
+                    { label: 'China', value: 448 },
+                    { label: 'Canada', value: 470 },
+                    { label: 'France', value: 540 },
+                    { label: 'Germany', value: 580 },
+                    { label: 'South Korea', value: 690 },
+                    { label: 'Netherlands', value: 1100 },
+                    { label: 'United States', value: 1200 },
+                    { label: 'United Kingdom', value: 1380 },
+                  ]}
+                  style={{ fontFamily: 'Roboto Mono, monospace' }}
+                />
+              </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <CodeSnippet
-              title={applicationtype}
-              subheader="api example to post and access your database."
-              chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
-              ]}
-              style={{ fontFamily: 'Roboto Mono, monospace' }}
-            />
-          </Grid>
+              <Grid item xs={12} md={6} lg={8}>
+                <AppWebsiteVisits
+                  title={`Total Payment $${TotalPayment / 100} Recieved`}
+                  subheader="Payment for current cycle"
+                  chartLabels={ProductTrans ? ProductTrans.map((i) => i.timestamp) : ['none']}
+                  chartData={[
+                    {
+                      name: ProductName,
+                      type: 'column',
+                      fill: 'solid',
+                      data: ProductTrans ? ProductTrans.map((i) => i.transactionAmnt / 100) : [0],
+                    },
+                    // {
+                    //   name: 'Team B',
+                    //   type: 'area',
+                    //   fill: 'gradient',
+                    //   data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                    // },
+                    // {
+                    //   name: 'Team C',
+                    //   type: 'line',
+                    //   fill: 'solid',
+                    //   data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                    // },
+                  ]}
+                />
+              </Grid>
+            </>
+          ) : (
+            <Grid item xs={12} md={6} lg={12}>
+              <Button variant="contained" style={{ margin: 10 }} onClick={Paylinkstart}>
+                Add
+              </Button>
+            </Grid>
+          )}
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject

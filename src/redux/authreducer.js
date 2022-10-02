@@ -5,6 +5,7 @@ import {
   SET_USER_JWT_TOKEN,
   SET_USER_DATABASES,
   SET_USER_AUTH_INFO,
+  SET_PAY_URL_TOKEN,
 } from './action';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   email: null,
   userdatabases: null,
   userauthinfo: null,
+  urltoken: null,
 };
 
 const authReducer = (state = initialState, action = {}) => {
@@ -28,6 +30,8 @@ const authReducer = (state = initialState, action = {}) => {
       return { ...state, userdatabases: action.payload };
     case SET_USER_AUTH_INFO:
       return { ...state, userauthinfo: action.payload };
+    case SET_PAY_URL_TOKEN:
+      return { ...state, urltoken: action.payload };
     default:
       return state;
   }

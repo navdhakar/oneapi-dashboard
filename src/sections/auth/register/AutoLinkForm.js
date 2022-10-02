@@ -1,9 +1,12 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 // @mui
 import {
   Stack,
@@ -22,6 +25,15 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
+import {
+  setName,
+  setEmail,
+  setPhoto,
+  setJwtToken,
+  setuserDatabases,
+  setuserAuthInfo,
+  seturlToken,
+} from '../../../redux/action';
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import { UNIFY_URI } from '../../../config';
@@ -56,7 +68,8 @@ export default function AutoLinkForm() {
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
-
+  const userObj = useSelector((state) => state.authReducer);
+  console.log(userObj.email);
   const defaultValues = {
     firstName: '',
     lastName: '',
@@ -118,6 +131,7 @@ export default function AutoLinkForm() {
           amount: Amount,
           productname: ProductName,
           productlink: res.secure_url,
+          accountemail: userObj.email,
         };
         console.log(data);
         makePostRequest('/unify/paymentservices/enable', data)
@@ -130,7 +144,7 @@ export default function AutoLinkForm() {
             };
             makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
               setloading(false);
-              navigate(`/paylinkpayment/${res.urlToken}`);
+              navigate(`/dashboard/paylink/`);
             });
           })
           .catch((err) => {
@@ -195,7 +209,7 @@ export default function AutoLinkForm() {
           size="large"
           type="submit"
           variant="contained"
-          sx={{ backgroundColor: '#00d36b' }}
+          sx={{ backgroundColor: '#2681f8' }}
           loading={isSubmitting}
           onClick={() => {
             onSubmit();
