@@ -67,7 +67,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Avatar src={oneapi} alt="photoURL" />
 
         <Typography variant="subtitle1" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-          Pay <span style={{ color: '#1877F2' }}>Link</span>
+          <span style={{ color: '#0a2441' }}>Pay</span>
+          <span style={{ color: '#2681f8' }}>Link</span>
         </Typography>
       </div>
       <Box sx={{ mb: 5, mx: 1 }}>
@@ -95,7 +96,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <img src={oneapi} alt="photoURL" style={{ width: 80 }} />
 
           <Typography variant="h3" sx={{ px: 5, mt: 10 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-            Pay <span style={{ color: '#1877F2' }}>Link</span>
+            <span style={{ color: '#0a2441' }}>Pay</span>
+            <span style={{ color: '#2681f8' }}>Link</span>
           </Typography>
 
           <Box sx={{ textAlign: 'center' }}>
