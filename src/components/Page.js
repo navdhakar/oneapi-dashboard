@@ -9,7 +9,7 @@ import { Box } from '@mui/material';
 const Page = forwardRef(({ children, title = '', meta, ...other }, ref) => (
   <>
     <Helmet>
-      <title>{`${title} | OneAPI`}</title>
+      <title>{`${title} | PayLink`}</title>
       {meta}
     </Helmet>
 

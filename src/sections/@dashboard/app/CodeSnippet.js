@@ -76,7 +76,8 @@ const getData = async (dbURI/CollectionName) => {
 }*/}`;
 
   const PaymentCode = `
-  <a href="https://app.nocodepayments.dev/paylinkpayment/<URLToken>" class="ud-main-btn ud-white-btn">
+  <a href="https://app.nocodepayments.dev/paylinkpayment/<URLToken>" 
+  class="ud-main-btn ud-white-btn">
     Purchase Now
   <a>`;
 
