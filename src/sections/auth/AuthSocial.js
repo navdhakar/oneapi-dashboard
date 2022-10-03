@@ -70,7 +70,7 @@ export default function AuthSocial() {
       })
       .then(() => {
         refreshTokenSetup(Response);
-        navigate('/dashboard/paylink');
+        navigate('dashboard/paylink');
       })
       .catch((err) => {
         console.log(err);
