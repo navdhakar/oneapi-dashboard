@@ -86,6 +86,7 @@ export default function PaymentDashboard() {
           return res.json();
         })
         .then((data) => {
+          console.log(data.URLToken);
           dispatch(setName(data.name));
           dispatch(setEmail(data.email));
           dispatch(setPhoto(data.photo));
@@ -99,7 +100,7 @@ export default function PaymentDashboard() {
           return true;
         })
         .catch((err) => {
-          console.log('some this bad');
+          console.log('some thing bad');
           console.log(err);
           navigate('/login');
         });
@@ -200,12 +201,16 @@ export default function PaymentDashboard() {
   const userObj = useSelector((state) => state.authReducer);
   console.log(userObj);
   const getpaymentdata = () => {
-    makeGETRequest(`/unify/paymentservices/reciever/${userObj.urltoken}`).then((res) => {
-      setProductName(res.productname);
-      setPaymentLink(res.paymentlink);
-      setProductTrans(res.paymentslogs);
-      setTotalPayment(res.dueamount);
-    });
+    makeGETRequest(`/unify/paymentservices/reciever/${userObj.urltoken}`)
+      .then((res) => {
+        setProductName(res.productname);
+        setPaymentLink(res.paymentlink);
+        setProductTrans(res.paymentslogs);
+        setTotalPayment(res.dueamount);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log(ProductTrans);
   };
   if (!ProductTrans) {
@@ -214,6 +219,7 @@ export default function PaymentDashboard() {
   useEffect(() => {
     setauthState(authstate());
     getpaymentdata();
+    console.log(userObj.urltoken);
   }, []);
 
   return authState ? (

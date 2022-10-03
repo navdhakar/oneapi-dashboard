@@ -70,7 +70,7 @@ export default function AuthSocial() {
       })
       .then(() => {
         refreshTokenSetup(Response);
-        navigate('dashboard/paylink');
+        navigate('/dashboard/paylink');
       })
       .catch((err) => {
         console.log(err);
@@ -119,7 +119,7 @@ export default function AuthSocial() {
       })
       .then(() => {
         refreshTokenSetup(res);
-        navigate('dashboard/paylink');
+        navigate('/dashboard/paylink');
       })
       .catch((err) => {
         console.log(err);
