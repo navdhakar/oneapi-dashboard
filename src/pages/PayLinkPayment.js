@@ -66,6 +66,9 @@ export default function AutoLinkPayment() {
   const [Email, setEmail] = useState('');
   const [Name, setName] = useState('');
   const [ProductName, setProductName] = useState('');
+  const [ProductImage, setProductImage] = useState('');
+  const [ProductDescription, setProductDescription] = useState('');
+
   const [Amount, setAmount] = useState(0);
 
   const smUp = useResponsive('up', 'sm');
@@ -80,6 +83,8 @@ export default function AutoLinkPayment() {
       setEmail(res.email);
       setProductName(res.productname);
       setAmount(res.amount);
+      setProductImage(res.productimage);
+      setProductDescription(res.productdescription);
     });
   });
   return (
@@ -97,7 +102,7 @@ export default function AutoLinkPayment() {
           {smUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
               AutoLink powered by {''}
-              <Link variant="subtitle2" href="https://oneapiapp.vercel.app/">
+              <Link variant="subtitle2" href="https://app.nocodepayments.devv/">
                 OneAPI
               </Link>
             </Typography>
@@ -107,9 +112,12 @@ export default function AutoLinkPayment() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h4" sx={{ px: 5, mt: 5, mb: 5 }}>
-              Pay ${Amount} to Buy <span style={{ color: '#2681f8' }}>{ProductName}</span> now.
+              Buy <span style={{ color: '#2681f8' }}>{ProductName}</span> now at ${Amount}.
             </Typography>
-            <img alt="register" src="/static/illustrations/payment.png" />
+            <img alt="register" src={ProductImage} style={{ borderRadius: '20px', padding: '10px' }} />
+            <Typography variant="body" sx={{ px: 5, mt: 5, mb: 5 }}>
+              {ProductDescription}
+            </Typography>
           </SectionStyle>
         )}
         <Container>

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Resizer from 'react-image-file-resizer';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -60,14 +60,36 @@ export default function AutoLinkForm() {
   const [Amount, setAmount] = useState(0);
   const [ProductName, setProductName] = useState('');
   const [selectedFile, setSelectedFile] = useState();
+  const [selectedBanner, setSelectedBanner] = useState();
+
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [isBannerPicked, setIsBannerPicked] = useState(false);
+
   const [producturl, setproducturl] = useState('');
+  const [productimage, setproductimage] = useState('');
+  const [Description, setDescription] = useState('');
+  const [compressedFile, setCompressedFile] = useState(null);
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name required'),
     lastName: Yup.string().required('Last Name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        400,
+        'JPEG',
+        80,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        'base64'
+      );
+    });
   const userObj = useSelector((state) => state.authReducer);
   console.log(userObj.email);
   const defaultValues = {
@@ -76,7 +98,6 @@ export default function AutoLinkForm() {
     email: '',
     password: '',
   };
-
   const methods = useForm({
     resolver: yupResolver(RegisterSchema),
     defaultValues,
@@ -104,53 +125,84 @@ export default function AutoLinkForm() {
         setalert(true);
       });
   };
+  const data = {
+    otp: '',
+    name: '',
+    email: '',
+    accountno: '',
+    ifsc: '',
+    secret: '',
+    verified: false,
+    trigger: 'Email',
+    triggerdata: '',
+    amount: '',
+    productname: '',
+    productlink: '',
+    accountemail: '',
+    productimage: '',
+    productdescription: '',
+  };
   const onCreate = async () => {
     setloading(true);
     const formData = new FormData();
+    const imgData = new FormData();
+
     formData.append('file', selectedFile);
+    formData.append('file', selectedBanner);
+
     formData.append('upload_preset', 'paylink');
     formData.append('cloud_name', 'dmzhcquzz');
+    imgData.append('file', selectedBanner);
+    imgData.append('upload_preset', 'paylink');
+    imgData.append('cloud_name', 'dmzhcquzz');
     fetch('https://api.cloudinary.com/v1_1/dmzhcquzz/upload', {
       method: 'post',
-      body: formData,
+      body: imgData,
     })
       .then((resp) => resp.json())
       .then((res) => {
-        console.log(res.secure_url);
-        setproducturl(res.secure_url);
-        const data = {
-          otp: OTP,
-          name: Name,
-          email: Email,
-          accountno: Accountno,
-          ifsc: IFSC,
-          secret: Secret,
-          verified: false,
-          trigger: 'Email',
-          triggerdata: Triggerdata,
-          amount: Amount,
-          productname: ProductName,
-          productlink: res.secure_url,
-          accountemail: userObj.email,
-        };
-        console.log(data);
-        makePostRequest('/unify/paymentservices/enable', data)
+        data.otp = OTP;
+        data.name = Name;
+        data.email = Email;
+        data.accountno = Accountno;
+        data.ifsc = IFSC;
+        data.secret = Secret;
+        data.triggerdata = Triggerdata;
+        data.amount = Amount;
+        data.productname = ProductName;
+        data.accountemail = userObj.email;
+        data.productimage = res.secure_url;
+        data.productdescription = Description;
+      })
+      .then(() => {
+        fetch('https://api.cloudinary.com/v1_1/dmzhcquzz/upload', {
+          method: 'post',
+          body: formData,
+        })
+          .then((resp) => resp.json())
           .then((res) => {
-            console.log(res);
-            const maildata = {
-              email: Email,
-              paylink: `https://oneapi.in.net/paylinkpayment/${res.urlToken}`,
-              name: Name,
-            };
-            makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
-              setloading(false);
-              navigate(`/dashboard/paylink/`);
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            setalerttext('Payments enable failed');
-            setalert(true);
+            console.log(res.secure_url);
+            setproducturl(res.secure_url);
+            data.productlink = res.secure_url;
+            console.log(data);
+            makePostRequest('/unify/paymentservices/enable', data)
+              .then((res) => {
+                console.log(res);
+                const maildata = {
+                  email: Email,
+                  paylink: `https://app.nocodepayments.dev/paylinkpayment/${res.urlToken}`,
+                  name: Name,
+                };
+                makePostRequest('/Payments/InitPayments/sendlinkmail', maildata).then((resp) => {
+                  setloading(false);
+                  navigate(`/dashboard/paylink/`);
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                setalerttext('Payments enable failed');
+                setalert(true);
+              });
           });
       })
       .catch((err) => {
@@ -158,11 +210,32 @@ export default function AutoLinkForm() {
         setalerttext('Payments enable failed');
         setalert(true);
       });
+
     console.log(formData);
+    console.log(productimage);
+    console.log(producturl);
   };
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     setIsFilePicked(true);
+  };
+  const dataURIToBlob = (dataURI) => {
+    const splitDataURI = dataURI.split(',');
+    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1]);
+    const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
+    const ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i += 1) ia[i] = byteString.charCodeAt(i);
+    return new Blob([ia], { type: mimeString });
+  };
+  const changeBanner = async (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    await resizeFile(file).then((image) => {
+      const newFile = dataURIToBlob(image);
+      newFile.name = file.name;
+      setSelectedBanner(newFile);
+      setIsBannerPicked(true);
+    });
   };
   const handleOTP = (event) => {
     setOTP(event.target.value);
@@ -184,6 +257,9 @@ export default function AutoLinkForm() {
   };
   const handletamount = (event) => {
     setAmount(event.target.value);
+  };
+  const handledescription = (event) => {
+    setDescription(event.target.value);
   };
   const handletproductname = (event) => {
     setProductName(event.target.value);
@@ -236,10 +312,37 @@ export default function AutoLinkForm() {
               Select a file
             </Typography>
           )}
-          <Button variant="contained" component="label" sx={{ backgroundColor: '#00d36b' }}>
+
+          <Button variant="contained" component="label">
             Upload File
             <input type="file" name="product" hidden onChange={changeHandler} />
           </Button>
+          {isBannerPicked ? (
+            <>
+              <Typography variant="body2" sx={{ mt: 5 }}>
+                Filename: {selectedBanner.name}
+              </Typography>
+              <Typography variant="body2" sx={{ mt: 5 }}>
+                Filetype: {selectedBanner.type}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body2" sx={{ mt: 5 }}>
+              Select banner
+            </Typography>
+          )}
+          <Button variant="contained" component="label">
+            Upload product image
+            <input type="file" name="product" hidden onChange={changeBanner} />
+          </Button>
+          <TextField
+            Name="Product Description"
+            label="Product Description(Max 100 words)"
+            onChange={handledescription}
+            multiline
+            maxRows={4}
+          />
+
           <TextField Name="amount" label="Amount($) in USD" onChange={handletamount} />
           <TextField Name="account no" label="Account Number" type={'number'} onChange={handleaccount} />
           <TextField Name="name" label="Account Holder Name" onChange={handleName} />
