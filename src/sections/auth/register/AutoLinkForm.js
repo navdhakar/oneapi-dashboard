@@ -317,6 +317,13 @@ export default function AutoLinkForm() {
             Upload File
             <input type="file" name="product" hidden onChange={changeHandler} />
           </Button>
+          <TextField
+            Name="Product Description"
+            label="Product Description(Max 100 words)"
+            onChange={handledescription}
+            multiline
+            maxRows={4}
+          />
           {isBannerPicked ? (
             <>
               <Typography variant="body2" sx={{ mt: 5 }}>
@@ -332,16 +339,9 @@ export default function AutoLinkForm() {
             </Typography>
           )}
           <Button variant="contained" component="label">
-            Upload product image
+            Product cover image
             <input type="file" name="product" hidden onChange={changeBanner} />
           </Button>
-          <TextField
-            Name="Product Description"
-            label="Product Description(Max 100 words)"
-            onChange={handledescription}
-            multiline
-            maxRows={4}
-          />
 
           <TextField Name="amount" label="Amount($) in USD" onChange={handletamount} />
           <TextField Name="account no" label="Account Number" type={'number'} onChange={handleaccount} />
@@ -349,7 +349,7 @@ export default function AutoLinkForm() {
 
           <TextField Name="IFSC code" label="IFSC Code" onChange={handleifsc} />
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Trigger</InputLabel>
+            <InputLabel id="demo-simple-select-label">Trigger </InputLabel>
             <Select labelId="demo-simple-select-label" id="demo-simple-select" value={'Email'} label="Trigger">
               <MenuItem value={'Email'}>Email</MenuItem>
               <MenuItem value={'SMS'}>SMS</MenuItem>
