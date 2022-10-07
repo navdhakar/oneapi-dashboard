@@ -49,7 +49,14 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2),
 }));
-
+const SectionStylesec = styled(Card)(({ theme }) => ({
+  width: '100%',
+  maxWidth: 464,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  margin: theme.spacing(0, 0, 0, 0),
+}));
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
@@ -99,10 +106,10 @@ export default function AutoLinkPayment() {
               <span style={{ color: '#2681f8' }}>Link</span>
             </Typography>
           </div>
-          {smUp && (
+          {mdUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
               AutoLink powered by {''}
-              <Link variant="subtitle2" href="https://app.nocodepayments.devv/">
+              <Link variant="subtitle2" href="https://app.nocodepayments.dev/">
                 OneAPI
               </Link>
             </Typography>
@@ -122,6 +129,17 @@ export default function AutoLinkPayment() {
         )}
         <Container>
           <ContentStyle>
+            {!mdUp && (
+              <SectionStylesec>
+                <Typography variant="h4" sx={{ px: 5, mt: 5, mb: 5 }}>
+                  Buy <span style={{ color: '#2681f8' }}>{ProductName}</span> now at ${Amount}.
+                </Typography>
+                <img alt="register" src={ProductImage} style={{ borderRadius: '20px', padding: '10px' }} />
+                <Typography variant="body" sx={{ px: 5, mt: 5, mb: 5 }}>
+                  {ProductDescription}
+                </Typography>
+              </SectionStylesec>
+            )}
             <Typography variant="h4" gutterBottom>
               Payment to <span style={{ color: '#2681f8' }}>{Name}</span> for{' '}
               <span style={{ color: '#2681f8' }}>{ProductName}</span>
