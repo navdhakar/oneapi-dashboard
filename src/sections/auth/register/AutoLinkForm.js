@@ -368,7 +368,6 @@ export default function AutoLinkForm() {
             onClick={() => {
               onCreate();
             }}
-            sx={{ backgroundColor: '#00d36b' }}
             style={{ margin: 10 }}
           >
             {loading ? <Loading /> : 'Create'}
