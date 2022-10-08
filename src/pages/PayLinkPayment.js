@@ -109,7 +109,7 @@ export default function AutoLinkPayment() {
           {mdUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
               AutoLink powered by {''}
-              <Link variant="subtitle2" href="https://app.nocodepayments.dev/">
+              <Link variant="subtitle2" href="https://app.nocodepayments.de v/">
                 OneAPI
               </Link>
             </Typography>
@@ -118,7 +118,7 @@ export default function AutoLinkPayment() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h4" sx={{ px: 5, mt: 5, mb: 5 }}>
+            <Typography variant="h4" sx={{ px: 5, mt: 15, mb: 5 }}>
               Buy <span style={{ color: '#2681f8' }}>{ProductName}</span> now at ${Amount}.
             </Typography>
             <img alt="register" src={ProductImage} style={{ borderRadius: '20px', padding: '10px' }} />
