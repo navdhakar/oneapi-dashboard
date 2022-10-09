@@ -88,9 +88,9 @@ export default function PaymentSuccess() {
           </div>
           {smUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
-              PayLink powered by {''}
-              <Link variant="subtitle2" href="https://oneapiapp.vercel.app/">
-                OneAPI
+              Payments powered by {''}
+              <Link variant="subtitle2" href="https://app.nocodepayments.dev/register">
+                PayLink
               </Link>
             </Typography>
           )}

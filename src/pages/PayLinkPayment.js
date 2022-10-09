@@ -108,9 +108,9 @@ export default function AutoLinkPayment() {
           </div>
           {mdUp && (
             <Typography variant="body2" sx={{ mt: 5 }}>
-              AutoLink powered by {''}
-              <Link variant="subtitle2" href="https://app.nocodepayments.de v/">
-                OneAPI
+              Payments powered by {''}
+              <Link variant="subtitle2" href="https://app.nocodepayments.dev/register">
+                PayLink
               </Link>
             </Typography>
           )}
