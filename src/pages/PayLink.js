@@ -10,7 +10,7 @@ import Logo from '../components/Logo';
 // sections
 import { AutoLinkForm } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
-import '../glob.css';
+
 import autolink from '../assets/oneapi.png';
 
 // ----------------------------------------------------------------------

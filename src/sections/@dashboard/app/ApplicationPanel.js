@@ -37,7 +37,7 @@ ApplicationPanel.propTypes = {
   chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default function ApplicationPanel({ title, subheader, chartLabels, chartData, ...other }) {
+export default function ApplicationPanel({ title, subheader, ...other }) {
   const [open, setOpen] = useState(null);
   const [openAddDoc, setopenAddDoc] = useState(null);
   const [dbcollections, setdbcollections] = useState([]);
@@ -45,12 +45,17 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const [newcollection, setnewcollection] = useState('');
   const [currentURI, setcurrentURI] = useState();
   const [currentDB, setcurrentDB] = useState();
+  const [currentMURI, setcurrentMURI] = useState();
+
   const [loading, setloading] = useState(false);
 
   const obj = useSelector((state) => state.authReducer);
   console.log(obj);
   const [dbURI, setdbURI] = useState('');
   const [newAddedDatabase, setnewAddedDatabase] = useState('');
+  const [MongoURI, setMongoURI] = useState('');
+  const [MongoPass, setMongoPass] = useState('');
+
   const makePostRequest = async (UrlPath, data) => {
     const response = await fetch(`${UNIFY_URI}${UrlPath}`, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -76,6 +81,10 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const NewDatabaseChange = (event) => {
     setnewAddedDatabase(event.target.value);
   };
+  const AMongoURI = (event) => {
+    setMongoURI(event.target.value);
+  };
+
   const NewCollectionChange = (event) => {
     setnewcollection(event.target.value);
   };
@@ -92,6 +101,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
     const data = {
       name: newdatabase,
       key: 'navdeep',
+      mongouri: MongoURI,
     };
 
     makePostRequest('/unify/dyno/data', data)
@@ -129,28 +139,29 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
   const handleAddDocumentsClose = () => {
     setopenAddDoc(null);
   };
-  const chartOptions = merge(BaseOptionChart(), {
-    plotOptions: { bar: { columnWidth: '16%' } },
-    fill: { type: chartData.map((i) => i.fill) },
-    labels: chartLabels,
-    xaxis: { type: 'datetime' },
-    tooltip: {
-      shared: true,
-      intersect: false,
-      y: {
-        formatter: (y) => {
-          if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} visits`;
-          }
-          return y;
-        },
-      },
-    },
-  });
+  // const chartOptions = merge(BaseOptionChart(), {
+  //   plotOptions: { bar: { columnWidth: '16%' } },
+  //   fill: { type: chartData.map((i) => i.fill) },
+  //   labels: chartLabels,
+  //   xaxis: { type: 'datetime' },
+  //   tooltip: {
+  //     shared: true,
+  //     intersect: false,
+  //     y: {
+  //       formatter: (y) => {
+  //         if (typeof y !== 'undefined') {
+  //           return `${y.toFixed(0)} visits`;
+  //         }
+  //         return y;
+  //       },
+  //     },
+  //   },
+  // });
   const createCollection = (dbName, collectionName) => {
     const data = {
       collectionname: collectionName,
       databaseName: currentDB,
+      mongouri: currentURI,
     };
     console.log(data);
     makePostRequest(`/unify/dyno/createcollection`, data)
@@ -217,6 +228,15 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
               onChange={NewDatabaseChange}
               value={newAddedDatabase}
             />
+            <Typography variant="subtitle2">Only if you want to use your own mongoDB cluster.</Typography>
+
+            <TextField
+              label="MongoDB URI(optional)"
+              fullWidth
+              style={{ margin: 10 }}
+              onChange={AMongoURI}
+              value={MongoURI}
+            />
 
             <Button
               variant="contained"
@@ -239,7 +259,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
             <Typography variant="subtitle1">Name</Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="subtitle1">Database URI</Typography>
+            <Typography variant="subtitle1">API endpoint</Typography>
           </TableCell>
           <TableCell>
             <Typography variant="subtitle1">Collection Name</Typography>
@@ -266,7 +286,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle2" sx={{ wordWrap: 'break-word', width: '15rem' }}>
-                  {UNIFY_URI}/unify/dyno/(getstoredata/createcollection)/{db.DatabaseName}
+                  {UNIFY_URI}/unify/dyno/{db.DatabaseName}
                 </Typography>
               </TableCell>
 

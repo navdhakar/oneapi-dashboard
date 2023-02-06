@@ -6,6 +6,7 @@ import {
   SET_USER_DATABASES,
   SET_USER_AUTH_INFO,
   SET_PAY_URL_TOKEN,
+  SET_CUSTOM_API,
 } from './action';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   userdatabases: null,
   userauthinfo: null,
   urltoken: null,
+  customapi: null,
 };
 
 const authReducer = (state = initialState, action = {}) => {
@@ -32,6 +34,8 @@ const authReducer = (state = initialState, action = {}) => {
       return { ...state, userauthinfo: action.payload };
     case SET_PAY_URL_TOKEN:
       return { ...state, urltoken: action.payload };
+    case SET_CUSTOM_API:
+      return { ...state, customapi: action.payload };
     default:
       return state;
   }

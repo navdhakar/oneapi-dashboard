@@ -18,27 +18,22 @@ CodeSnippet.propTypes = {
   chartData: PropTypes.array.isRequired,
 };
 
-export default function CodeSnippet({ title, subheader, link, chartData, ...other }) {
+export default function CodeSnippet({ title, subheader, link, ...other }) {
   const [code, setcode] = useState('');
 
-  const DatabaseAPI = `const postData = async (dbURI, data) => {
+  const PostData = `const postData = async ('APIendpoint/postdata/databasename/collectionname') => {
     const payload = {
-      doc:{   // this is where you add your data object which is to be added in collection
-        data
+      authtoken:"token", //if using OAuth in your app
+      doc:{   // this is where you add your data object      
+        data // which is to be added in collection
       }
     }
     const response = await fetch(dbURI, {
       method: 'POST',
-      mode: 'cors',
       body: JSON.stringify(payload),
-      cache: 'no-cache',
-      credentials: 'same-origin', 
-      headers: {
-        -'X-Parse-Application-Id': 'Database Name' 
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer', 
+      headers:{
+        authorization:"your secret token"
+      }
     });
     return response.json();
   };
@@ -46,80 +41,85 @@ export default function CodeSnippet({ title, subheader, link, chartData, ...othe
   /*{
     "response": "new collection/doc",
     "collectionName": "userprofile"
-}*/
-const getData = async (dbURI/CollectionName) => {
+}*/`;
+  const GetData = `const getData = async ('APIendpoint/operation/databasename/collectionname') => {
+    //here operation can be find, findOne, findById, 
+    //findOneAndUpdate, updateMany, deleteMany, deleteOne
+    //findByOneAndDelete, replaceOne, updateOne.
+    const payload = {
+      authtoken:"token", //if using OAuth in your app
+      query:{            
+      email:"someone@gmail.com" //standard mongoose query
+      }
+      update:{
+        name:"some name" // update query also need update data
+      }                 // only pass this for update and replace queries
+    }
     const response = await fetch(dbURI, {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      credentials: 'same-origin',
-      headers: {
-        -'X-Parse-Application-Id': 'Database Name' 
-      },
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers:{
+        authorization:"your secret token"
+      }
     });
     return response.json();
   };
    //returned response
   /*{
-  "objectId": "2ntvSpRGIK",
-  "createdAt": "2022-01-01T12:23:45.678Z"
-}*/
-{/*{
-  "results": [
-    {
-      "objectId": "2ntvSpRGIK",
-      "userName": my awesome data,
-      "userEmail":"My user Email"
-      "updatedAt": "2022-01-01T12:23:45.678Z",
-      "createdAt": "2022-01-01T12:23:45.678Z"
-    }
-  ]
-}*/}`;
+   Queried documents
+}*/`;
 
-  const PaymentCode = `
-  <a href="https://app.nocodepayments.dev/paylinkpayment/<URLToken>" 
-  class="ud-main-btn ud-white-btn">
+  const PaymentCode =
+    `
+  <a href="` +
+    `${link}" ` +
+    `class="ud-main-btn ud-white-btn">
     Purchase Now
   <a>`;
 
   useEffect(() => {
     console.log(title);
-    if (title === 'Database') {
-      setcode(DatabaseAPI);
+    if (title === 'Post Data') {
+      setcode(PostData);
     }
+    if (title === 'Get Data') {
+      setcode(GetData);
+    }
+
     if (title === 'Payments') {
       setcode(PaymentCode);
     }
   }, [title]);
 
-  const chartLabels = chartData.map((i) => i.label);
+  // const chartLabels = chartData.map((i) => i.label);
 
-  const chartSeries = chartData.map((i) => i.value);
+  // const chartSeries = chartData.map((i) => i.value);
 
-  const chartOptions = merge(BaseOptionChart(), {
-    tooltip: {
-      marker: { show: false },
-      y: {
-        formatter: (seriesName) => fNumber(seriesName),
-        title: {
-          formatter: () => '',
-        },
-      },
-    },
-    plotOptions: {
-      bar: { horizontal: true, barHeight: '28%', borderRadius: 2 },
-    },
-    xaxis: {
-      categories: chartLabels,
-    },
-  });
+  // const chartOptions = merge(BaseOptionChart(), {
+  //   tooltip: {
+  //     marker: { show: false },
+  //     y: {
+  //       formatter: (seriesName) => fNumber(seriesName),
+  //       title: {
+  //         formatter: () => '',
+  //       },
+  //     },
+  //   },
+  //   plotOptions: {
+  //     bar: { horizontal: true, barHeight: '28%', borderRadius: 2 },
+  //   },
+  //   xaxis: {
+  //     categories: chartLabels,
+  //   },
+  // });
 
   return (
     <Card {...other}>
-      <CardHeader title={subheader} subheader={`URLToken: ${link}`} />
+      <CardHeader title={subheader} />
 
       <CopyBlock
         text={code}
-        language={'html'}
+        language={'javascript'}
         showLineNumbers={false}
         startingLineNumber={1}
         theme={obsidian}

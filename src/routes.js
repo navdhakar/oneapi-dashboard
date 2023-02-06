@@ -15,6 +15,8 @@ import PayLink from './pages/PayLink';
 import PayLinkPayment from './pages/PayLinkPayment';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentDashboard from './pages/PaymentDashboard';
+import Webhooks from './pages/Webhooks';
+import APIExample from './pages/APIExample';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +32,15 @@ export default function Router() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'paylink', element: <PaymentDashboard /> },
+        { path: 'webhooks', element: <Webhooks /> },
+        { path: 'apiexample', element: <APIExample /> },
       ],
     },
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/paylink" /> },
+        { path: '/', element: <Navigate to="/dashboard/server" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: 'paylink', element: <PayLink /> },

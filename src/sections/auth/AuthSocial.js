@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { GoogleLogin, useGoogleLogin } from 'react-google-login';
 import { useSelector, useDispatch } from 'react-redux';
@@ -119,7 +118,7 @@ export default function AuthSocial() {
       })
       .then(() => {
         refreshTokenSetup(res);
-        navigate('/dashboard/paylink');
+        navigate('/dashboard/server');
       })
       .catch((err) => {
         console.log(err);

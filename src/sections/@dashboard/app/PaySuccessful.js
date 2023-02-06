@@ -34,7 +34,7 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../user';
 import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
 import { UNIFY_URI } from '../../../config';
 // ----------------------------------------------------------------------
-import { makePostRequest } from '../../../Api/Apikit';
+import { makePostRequest, makeGETRequest } from '../../../Api/Apikit';
 
 ApplicationPanel.propTypes = {
   title: PropTypes.string,
@@ -43,13 +43,15 @@ ApplicationPanel.propTypes = {
   chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default function ApplicationPanel({ title, subheader, chartLabels, chartData, ...other }) {
+export default function ApplicationPanel({ title, subheader, ...other }) {
   const [open, setOpen] = useState(null);
   const [openAddDoc, setopenAddDoc] = useState(null);
-  const [addEmailauth, setaddEmailauth] = useState(false);
-  const [addsmsauth, setaddsmsauth] = useState(false);
+  const [addEmailhook, setaddEmailhook] = useState(false);
+  const [addRedirecthook, setaddRedirecthook] = useState(false);
   const [selectedDatabase, setselectedDatabase] = useState(null);
   const [loading, setloading] = useState(false);
+  const [Description, setDescription] = useState('');
+  const [triggerdata, settriggerdata] = useState('');
 
   const [Eserviceinitialized, setEserviceinitialized] = useState(false);
   const [Sserviceinitialized, setSserviceinitialized] = useState(false);
@@ -70,32 +72,17 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
     setopenAddDoc(null);
   };
 
-  const InitAuthServices = () => {
+  const InitHookServices = () => {
     setloading(true);
-    if (addEmailauth) {
+    if (addEmailhook) {
       const data = {
-        databaseName: selectedDatabase,
-        mongouri: obj.userdatabases((o) => o.DatabaseName === selectedDatabase).dburi,
+        emailbody: Description,
       };
-      console.log(obj.userdatabases((o) => o.DatabaseName === selectedDatabase).dburi);
-      makePostRequest('/AuthServices/InitEmailAuth/enable', data)
-        .then((data) => {
-          console.log(data);
+      makePostRequest(`/unify/paymentservices/updateemail/${obj.urltoken}`, data)
+        .then((res) => {
+          console.log(res);
           setEserviceinitialized(true);
-        })
-        .then(() => {
-          const data = {
-            email: obj.email,
-            status: true,
-            authuri: 'http://localhost:8002/unify/dyno/(getstoredata/createcollection)/newcomp',
-            databasename: selectedDatabase,
-            collectionName: 'UserInfo',
-            type: 'E-mail',
-          };
-          makePostRequest('/signup/register/enable_auth', data).then((res) => {
-            console.log(res);
-            setloading(false);
-          });
+          setloading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -108,16 +95,28 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
     }
   };
   useEffect(() => {
-    // setaddEmailauth(true);
-    if (obj.userauthinfo) {
-      console.log(obj.userauthinfo);
-      setselectedDatabase(obj.userauthinfo.DatabaseName);
-      setEserviceinitialized(obj.userauthinfo.Status);
-      if (obj.userauthinfo.AuthType === 'E-mail') {
-        setaddEmailauth(true);
-      }
-    }
+    setaddEmailhook(true);
+    makeGETRequest(`/unify/paymentservices/reciever/${obj.urltoken}`)
+      .then((res) => {
+        console.log(res);
+        // setEmail(res.email);
+        // setName(res.name);
+        settriggerdata(res.triggerdata);
+        // setAmount(res.amount);
+        // setProductName(res.productname);
+        // setProductURL(res.productlink);
+      })
+      .catch((e) => {
+        console.log(e);
+        // setalerttext('server is down, please try again!!');
+        // setalert(true);
+      });
+    // setselectedDatabase(obj.userauthinfo.DatabaseName);
+    // setEserviceinitialized(obj.userauthinfo.Status);
   });
+  const handledescription = (event) => {
+    setDescription(event.target.value);
+  };
   const AuthInfo = (props) => {
     return (
       <TableBody>
@@ -127,35 +126,35 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
               {props.serviceactive ? 'active' : 'inactive'}
             </Label>
           </TableCell>
+          <TableCell align="left">
+            <Typography variant="subtitle2">{props.type} </Typography>
+          </TableCell>
           <TableCell align="center">
             <Typography variant="subtitle2" sx={{ wordWrap: 'break-word', width: '15rem' }}>
-              http://localhost:8002/unify/dyno/(getstoredata/createcollection)/newcomp
-            </Typography>
-          </TableCell>
-          <TableCell>
-            <Typography variant="subtitle2" sx={{ color: '#1877F2' }} align="center">
-              {props.database}
+              Send emails to your users on successful transaction.
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="subtitle2" align="center">
-              {props.collection}
+              {props.data ? props.data : triggerdata}
             </Typography>
           </TableCell>
+          {/* <TableCell>
+            <Typography variant="subtitle2" align="center">
+              {props.collection}
+            </Typography>
+          </TableCell> */}
 
-          <TableCell align="left">
-            <Typography variant="subtitle2">{props.type} Authentication</Typography>
-          </TableCell>
           {props.serviceactive ? null : (
             <TableCell>
               <Button
                 variant="contained"
                 onClick={() => {
-                  InitAuthServices();
+                  InitHookServices();
                 }}
                 style={{ margin: 10 }}
               >
-                Enable
+                Save
               </Button>
             </TableCell>
           )}
@@ -180,30 +179,30 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">Enable Authentication </Typography>
+            <Typography variant="subtitle1">Add any hooks </Typography>
 
             <FormGroup>
               <FormControlLabel
                 control={
                   <Switch
-                    checked={addEmailauth}
+                    checked={addEmailhook}
                     onChange={() => {
-                      setaddEmailauth(!addEmailauth);
+                      setaddEmailhook(!addEmailhook);
                     }}
                   />
                 }
-                label="E-mail Authentication"
+                label="Send E-mail"
               />
               <FormControlLabel
                 control={
                   <Switch
-                    checked={addsmsauth}
+                    checked={addRedirecthook}
                     onChange={() => {
-                      setaddsmsauth(!addsmsauth);
+                      setaddRedirecthook(!addRedirecthook);
                     }}
                   />
                 }
-                label="SMS authentication"
+                label="Redirect web page"
               />
             </FormGroup>
           </Box>
@@ -214,8 +213,11 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
           <TableCell align="left">
             <Typography variant="subtitle1">Status</Typography>
           </TableCell>
+          <TableCell align="left">
+            <Typography variant="subtitle1">Hook Type</Typography>
+          </TableCell>
           <TableCell align="center">
-            <Typography variant="subtitle1">User Authentication</Typography>
+            <Typography variant="subtitle1">Description</Typography>
           </TableCell>
           <TableCell>
             <Button
@@ -224,7 +226,7 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
                 handleAddDocumentsOpen(e);
               }}
             >
-              + Add Database
+              Edit Data
             </Button>
             <MenuPopover
               open={Boolean(openAddDoc)}
@@ -234,49 +236,29 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
             >
               <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
                 <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle1">Add Database</Typography>
+                  <Typography variant="subtitle1">Email Body</Typography>
 
-                  <FormGroup>
-                    <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
-                      {obj.userdatabases.map((database) => {
-                        return (
-                          <FormControlLabel
-                            control={
-                              <Radio
-                                value={database.DatabaseName}
-                                onClick={(e) => {
-                                  setselectedDatabase(e.target.value);
-                                }}
-                              />
-                            }
-                            label={database.DatabaseName}
-                          />
-                        );
-                      })}
-                    </RadioGroup>
-                  </FormGroup>
+                  <TextField
+                    Name="Product Description"
+                    label="Message Body"
+                    onChange={handledescription}
+                    multiline
+                    maxRows={4}
+                    sx={{ width: 300 }}
+                  />
                 </Box>
               </Box>
             </MenuPopover>
           </TableCell>
-          <TableCell>
+          {/* <TableCell>
             <Typography variant="subtitle1">In Collection</Typography>
-          </TableCell>
-
-          <TableCell align="left">
-            <Typography variant="subtitle1">Type</Typography>
-          </TableCell>
+          </TableCell> */}
         </TableRow>
       </TableBody>
-      {addEmailauth ? (
-        <AuthInfo
-          type={'E-mail'}
-          database={selectedDatabase}
-          collection={'UserInfo'}
-          serviceactive={Eserviceinitialized}
-        />
+      {addEmailhook ? (
+        <AuthInfo type={'E-mail'} data={Description} collection={'UserInfo'} serviceactive={Eserviceinitialized} />
       ) : null}
-      {addsmsauth ? (
+      {addRedirecthook ? (
         <AuthInfo
           type={'SMS'}
           database={selectedDatabase}

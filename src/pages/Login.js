@@ -70,8 +70,8 @@ export default function Login() {
             <img src={autolink} alt="photoURL" style={{ width: 70 }} />
 
             <Typography variant="h3" sx={{ mt: 5, mb: 5 }} style={{ fontFamily: 'Bebas Neue, cursive' }}>
-              <span style={{ color: '#0a2441' }}>Pay</span>
-              <span style={{ color: '#2681f8' }}>Link</span>
+              <span style={{ color: '#0a2441' }}>One</span>
+              <span style={{ color: '#2681f8' }}>API</span>
             </Typography>
           </div>
 

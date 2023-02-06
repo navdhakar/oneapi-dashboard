@@ -226,7 +226,7 @@ export default function PaymentDashboard() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Add Payment To Your Product 💳
         </Typography>
 
         <Grid container spacing={3}>

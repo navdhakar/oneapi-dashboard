@@ -102,6 +102,7 @@ function NavItem({ item, active }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         bgcolor: 'text.disabled',
+
                         transition: (theme) => theme.transitions.create('transform'),
                         ...(isActiveSub && {
                           transform: 'scale(2)',

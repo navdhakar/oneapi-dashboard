@@ -6,10 +6,15 @@ import Iconify from '../../components/Iconify';
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const navConfig = [
+  {
+    title: 'API endpoints',
+    path: '/dashboard/server',
+    icon: getIcon('ant-design:api-filled'),
+  },
   // {
-  //   title: 'server',
-  //   path: '/dashboard/server',
-  //   icon: getIcon('eva:pie-chart-2-fill'),
+  //   title: 'API use guide',
+  //   path: '/dashboard/apiexample',
+  //   icon: getIcon('lucide:webhook'),
   // },
   // {
   //   title: 'dashboard',
@@ -25,8 +30,15 @@ const navConfig = [
   {
     title: 'payments',
     path: '/dashboard/paylink',
-    icon: getIcon('eva:shopping-bag-fill'),
+    icon: getIcon('fluent:payment-28-filled'),
   },
+  // {
+  //   title: 'webhooks',
+  //   path: '/dashboard/webhooks',
+  //   icon: getIcon('lucide:webhook'),
+  // },
+
+  // {
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',

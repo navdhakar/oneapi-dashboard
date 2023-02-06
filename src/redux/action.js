@@ -5,6 +5,7 @@ export const SET_USER_JWT_TOKEN = 'SET_USER_JWT_TOKEN';
 export const SET_USER_DATABASES = 'SET_USER_DATABASES';
 export const SET_USER_AUTH_INFO = 'SET_USER_AUTH_INFO';
 export const SET_PAY_URL_TOKEN = 'SET_PAY_URL_TOKEN';
+export const SET_CUSTOM_API = 'SET_CUSTOM_API';
 
 export const setName = (name) => (dispatch) => {
   dispatch({
@@ -47,5 +48,11 @@ export const seturlToken = (urltoken) => (dispatch) => {
   dispatch({
     type: SET_PAY_URL_TOKEN,
     payload: urltoken,
+  });
+};
+export const setcustomapi = (customapi) => (dispatch) => {
+  dispatch({
+    type: SET_CUSTOM_API,
+    payload: customapi,
   });
 };

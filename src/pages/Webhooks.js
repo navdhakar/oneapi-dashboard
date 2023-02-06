@@ -21,7 +21,6 @@ import {
   setuserDatabases,
   setuserAuthInfo,
   seturlToken,
-  setcustomapi,
 } from '../redux/action';
 
 import Iconify from '../components/Iconify';
@@ -37,22 +36,19 @@ import {
   AppCurrentSubject,
   CodeSnippet,
   AuthPanel,
-  APIFunctions,
+  PaySuccessful,
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
-  const [applicationtype, setapplicationtype] = useState('Database');
+  const [applicationtype, setapplicationtype] = useState('Pay successful');
   const [authState, setauthState] = useState(false);
   const navigate = useNavigate();
 
   const setApplication = (apptype) => {
     setapplicationtype(apptype);
-  };
-  const navigatetopayments = (apptype) => {
-    navigate('/dashboard/paylink');
   };
   const [cookies, setCookie] = useCookies(['user']);
 
@@ -78,7 +74,6 @@ export default function DashboardApp() {
         // body data type must match "Content-Type" header
       })
         .then((res) => {
-          console.log(res);
           if (res.status === 400) {
             navigate('/register');
           }
@@ -91,14 +86,13 @@ export default function DashboardApp() {
           dispatch(setuserDatabases(data.databases));
           dispatch(setuserAuthInfo(data.auth));
           dispatch(seturlToken(data.URLToken));
-          dispatch(setcustomapi(data.apifunctions));
         })
         .then(() => {
           setauthState(true);
           return true;
         })
         .catch((err) => {
-          console.log('something did not work');
+          console.log('some this bad');
           console.log(err);
           navigate('/login');
         });
@@ -107,45 +101,47 @@ export default function DashboardApp() {
     }
   };
   const AppPanel = () => {
-    if (applicationtype === 'Database') {
+    // console.log(applicationtype);
+
+    if (applicationtype === 'Pay successful') {
       return (
-        <>
-          <Grid item xs={12} md={6} lg={12}>
-            <ApplicationPanel title={applicationtype} subheader="+ Create Database API" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={12}>
-            <CodeSnippet
-              title={'Post Data'}
-              subheader="api example to post and access your database."
-              style={{ fontFamily: 'Roboto Mono, monospace' }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6} lg={12}>
-            <CodeSnippet
-              title={'Get Data'}
-              subheader="api example to perform operations on your database."
-              style={{ fontFamily: 'Roboto Mono, monospace' }}
-            />
-          </Grid>
-        </>
-      );
-    }
-    if (applicationtype === 'Authentication') {
-      return (
-        <>
-          <Grid item xs={12} md={6} lg={12}>
-            <AuthPanel title={applicationtype} subheader="+ Create OAuth API" />
-          </Grid>
-        </>
-      );
-    }
-    if (applicationtype === 'API Functions') {
-      return (
-        <>
-          <Grid item xs={12} md={6} lg={12}>
-            <APIFunctions title={applicationtype} subheader="+ Create OAuth API" />
-          </Grid>
-        </>
+        <PaySuccessful
+          title={applicationtype}
+          subheader="Create Hook"
+          chartLabels={[
+            '01/01/2003',
+            '02/01/2003',
+            '03/01/2003',
+            '04/01/2003',
+            '05/01/2003',
+            '06/01/2003',
+            '07/01/2003',
+            '08/01/2003',
+            '09/01/2003',
+            '10/01/2003',
+            '11/01/2003',
+          ]}
+          chartData={[
+            {
+              name: 'Team A',
+              type: 'column',
+              fill: 'solid',
+              data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+            },
+            {
+              name: 'Team B',
+              type: 'area',
+              fill: 'gradient',
+              data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+            },
+            {
+              name: 'Team C',
+              type: 'line',
+              fill: 'solid',
+              data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+            },
+          ]}
+        />
       );
     }
   };
@@ -156,15 +152,15 @@ export default function DashboardApp() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Create API's 🔗
+          Create Custom Webhooks 🪝
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status={userObj.userdatabases ? 'Active' : 'Inactive'}
-              name={'Database API'}
-              apptype={'Database'}
+              status="active"
+              name={'Pay successful'}
+              apptype={'Pay successful'}
               color="warning"
               icon={'ant-design:database-filled'}
               setApplication={setApplication}
@@ -173,19 +169,18 @@ export default function DashboardApp() {
 
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status={userObj.customapi ? 'Active' : 'Inactive'}
-              name={'API Functions'}
-              apptype={'API Functions'}
-              icon={'ph:function-bold'}
+              status="In development"
+              name={'Storage'}
+              apptype={'Storage'}
+              icon={'clarity:storage-solid'}
               setApplication={setApplication}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status={userObj.userauthinfo ? 'Active' : 'Inactive'}
-              name={'OAuth API'}
-              apptype={'Authentication'}
+              status="active"
+              name={'Authentication'}
               color="error"
               icon={'carbon:two-factor-authentication'}
               setApplication={setApplication}
@@ -194,16 +189,17 @@ export default function DashboardApp() {
 
           <Grid item xs={12} sm={6} md={3}>
             <Application
-              status={userObj.urltoken ? 'Active' : 'Inactive'}
+              status="In development"
               name={'Payments'}
-              apptype={'Payments'}
-              color="info"
-              icon={'fluent:payment-28-filled'}
-              setApplication={navigatetopayments}
+              ccolor="info"
+              icon={'ant-design:message-filled'}
+              setApplication={setApplication}
             />
           </Grid>
 
-          <AppPanel />
+          <Grid item xs={12} md={6} lg={12}>
+            <AppPanel />
+          </Grid>
 
           {/* <Grid item xs={12} md={6} lg={4}>
               <AppCurrentVisits
@@ -222,6 +218,26 @@ export default function DashboardApp() {
                 ]}
               />
             </Grid> */}
+
+          {/* <Grid item xs={12} md={6} lg={8}>
+            <CodeSnippet
+              title={applicationtype}
+              subheader="api example to post and access your database."
+              chartData={[
+                { label: 'Italy', value: 400 },
+                { label: 'Japan', value: 430 },
+                { label: 'China', value: 448 },
+                { label: 'Canada', value: 470 },
+                { label: 'France', value: 540 },
+                { label: 'Germany', value: 580 },
+                { label: 'South Korea', value: 690 },
+                { label: 'Netherlands', value: 1100 },
+                { label: 'United States', value: 1200 },
+                { label: 'United Kingdom', value: 1380 },
+              ]}
+              style={{ fontFamily: 'Roboto Mono, monospace' }}
+            />
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject

@@ -12,7 +12,7 @@ import Logo from '../components/Logo';
 // sections
 import { OnePayment } from '../sections/auth/register';
 import AuthSocial from '../sections/auth/AuthSocial';
-import '../glob.css';
+
 import autolink from '../assets/oneapi.png';
 
 import { makeGETRequest } from '../Api/Apikit';
