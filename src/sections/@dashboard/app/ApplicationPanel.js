@@ -161,7 +161,7 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
     const data = {
       collectionname: collectionName,
       databaseName: currentDB,
-      mongouri: currentURI,
+      mongouri: MongoURI,
     };
     console.log(data);
     makePostRequest(`/unify/dyno/createcollection`, data)
