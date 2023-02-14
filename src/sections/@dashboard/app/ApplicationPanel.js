@@ -178,9 +178,14 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
             collection: collectionName,
           },
         };
-        makePostRequest('/signup/register/user_collection_update', UserDataUpdate).then((res) => {
-          console.log(res);
-        });
+        makePostRequest('/signup/register/user_collection_update', UserDataUpdate)
+          .then((res) => {
+            console.log('sending coll. update req.');
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setopenAddDoc(null);
         window.location.reload();
       })
