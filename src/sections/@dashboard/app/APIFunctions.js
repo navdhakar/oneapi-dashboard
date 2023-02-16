@@ -126,7 +126,16 @@ export default function ApplicationPanel({ title, subheader, chartLabels, chartD
       setendpoint('');
 
       setCode(
-        `(function() {\n const Result = null;\n const userInfo = req.userInfo; // access your user's info using this \n const DBconn = mongoose.createConnection(req.databaseURI); //access your database using this\n //write your api(js) function here\n //use above variables to modify database and access your user's info\n return Result //assign your api response in Result\n})()`
+        `(async function() {
+ const userInfo = req.userInfo; // access your user's info using this 
+ const DBconn = mongoose.createConnection(req.databaseURI); //access your database using this
+ const UserInfo = DBconn.model('test1', DefaultSchema); //access any collection
+ let Result = await UserInfo.find({})
+ console.log(Result)
+ //write your api(js) function here
+ //use above variables to modify database and access your user's info
+ return Result //assign your api response in Result
+})()`
       );
     } else {
       const api = obj.customapi.find((o) => o.endpoint === event.target.value);
