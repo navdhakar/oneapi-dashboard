@@ -158,6 +158,8 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
   //   },
   // });
   const createCollection = (dbName, collectionName) => {
+    setloading(true);
+
     const data = {
       collectionname: collectionName,
       databaseName: currentDB,
@@ -168,8 +170,9 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
       .then((resData) => {
         console.log(resData);
         setdbcollections((prevdatabase) => [...prevdatabase, collectionName]);
+        return resData;
       })
-      .then(() => {
+      .then((resData) => {
         const UserDataUpdate = {
           email: obj.email,
           databases: {
@@ -187,7 +190,8 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
             console.log(err);
           });
         setopenAddDoc(null);
-        window.location.reload();
+        setloading(false);
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
