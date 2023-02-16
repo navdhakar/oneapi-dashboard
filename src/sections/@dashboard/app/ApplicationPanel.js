@@ -166,11 +166,10 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
     console.log(data);
     makePostRequest(`/unify/dyno/createcollection`, data)
       .then((resData) => {
+        console.log(resData);
         setdbcollections((prevdatabase) => [...prevdatabase, collectionName]);
       })
       .then(() => {
-        const collectiondata = dbcollections;
-
         const UserDataUpdate = {
           email: obj.email,
           databases: {
@@ -178,6 +177,7 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
             collection: collectionName,
           },
         };
+        console.log(UserDataUpdate);
         makePostRequest('/signup/register/user_collection_update', UserDataUpdate)
           .then((res) => {
             console.log('sending coll. update req.');
