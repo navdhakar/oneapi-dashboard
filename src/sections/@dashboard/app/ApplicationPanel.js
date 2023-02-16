@@ -191,7 +191,6 @@ export default function ApplicationPanel({ title, subheader, ...other }) {
           });
         setopenAddDoc(null);
         setloading(false);
-        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
