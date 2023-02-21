@@ -156,7 +156,10 @@ export default function DashboardApp() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Create API's 🔗
+          Create API's 🔗 Auth token
+          <Typography variant="subtitle2" sx={{ wordWrap: 'break-word', width: '30rem' }}>
+            {userObj.urltoken}
+          </Typography>
         </Typography>
 
         <Grid container spacing={3}>
